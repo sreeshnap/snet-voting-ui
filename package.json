@@ -17,7 +17,6 @@
     "voting",
     "ethereum"
   ],
-  "homepage": "snet-voting-ui",
   "license": "MIT",
   "name": "snet-voting-ui",
   "scripts": {
