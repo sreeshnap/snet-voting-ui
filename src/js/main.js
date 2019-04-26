@@ -28,6 +28,8 @@ new Vue({
     candidates: [
       { fullName:"Tiero", description: "lorem ipsum" },
       { fullName:"Cassio", description: "lorem ipsum" },
+      { fullName:"Alberto", description: "lorem ipsum" },
+      { fullName:"Sophia", description: "lorem ipsum" },
       { fullName:"Ben", description: "lorem ipsum" },      
     ],
     tier:0, 
