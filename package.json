@@ -3,14 +3,17 @@
     "autoprefixer": "^9.5.0",
     "bulma": "^0.7.2",
     "cpx": "^1.5.0",
+    "ethjs": "^0.4.0",
+    "ethjs-signer": "^0.1.1",
     "parcel-bundler": "^1.12.2",
     "postcss-cli": "^6.1.2",
     "push-dir": "^0.4.1",
     "sass": "^1.17.3",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "web3": "^1.0.0-beta.52"
   },
   "alias": {
-    "vue" : "./node_modules/vue/dist/vue.common.js"
+    "vue": "./node_modules/vue/dist/vue.common.js"
   },
   "keywords": [
     "snet",
