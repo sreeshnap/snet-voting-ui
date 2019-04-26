@@ -32,16 +32,22 @@
       </div>
       <div class="columns">
         <div class="column is-8-desktop is-offset-2-desktop">
+          <div class="content" v-if="from">
+            <h3>Your Account</h3>
+            <p>
+              {{ from }}
+            </p>
+          </div>
           <div class="content">
             <h3>Your Vote</h3>
-            <br />
             <div v-if="votes.length">
               <ol>
                 <li v-for="vote in votes">
                   {{ vote }}
                 </li>
               </ol>
-              <button class="button" :disabled="!voteComplete" v-on:click="voteForCandidate(votes)" >
+              <br />
+              <button class="button" :disabled="!voteComplete || signed" v-on:click="voteForCandidate(votes)">
                 <span class="icon">
                   ✍️
                 </span>

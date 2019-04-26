@@ -22,18 +22,24 @@ function onAddCandidate(candidate) {
   if (this.tier > 2) {
     this.voteComplete = true;
   }
-  
+
 }
 
 function voteForCandidate(votes) {
   var msg = toHex(votes.toString());
   var from = window.web3.eth.accounts[0]
+  if (!from)
+    return notification(this, "error", "Connect or Unlock Metamask and try again")
+  
+  this.from = from;
+
   window.ethjs.personal_sign(msg, from)
     .then((signed) => {
       notification(this, 'success', 'Signed! ' + signed);
-      return signed;
+      
+      this.signed = signed;
     })
-    .catch(console.error)
+    .catch(error => notification(this, 'error', error))
 }
 
 function mounted() {
@@ -64,6 +70,8 @@ new Vue({
     tier: 0,
     voteComplete: false,
     votes: [],
+    from: undefined,
+    signed: undefined,
     message: null,
     messageType: undefined
   },
