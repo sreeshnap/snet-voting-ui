@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Ethereum from './ethereum';
+
 const candidates = require('../api.json');
+
+const BASE_API_URI = `https://a173jkxkw5.execute-api.eu-west-1.amazonaws.com/production`;
 
 function onAddCandidate(candidate) {
 
@@ -26,19 +29,34 @@ function onAddCandidate(candidate) {
 }
 
 function voteForCandidate(votes) {
-  var msg = toHex(votes.toString());
-  var from = window.web3.eth.accounts[0]
+  const msg = votes.toString();
+  const msgHash = toHex(msg);
+  const from = window.web3.eth.accounts[0]
   if (!from)
     return notification(this, "error", "Connect or Unlock Metamask and try again")
-  
+
   this.from = from;
 
-  window.ethjs.personal_sign(msg, from)
+  window.ethjs.personal_sign(msgHash, from)
     .then((signed) => {
-      notification(this, 'success', 'Signed! ' + signed);
-      
       this.signed = signed;
+
+      return {
+        message: msg,
+        signature: signed
+      };
     })
+    .then(body => {
+      return fetch(BASE_API_URI + `/upload`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+      });
+    })
+    .then(response => response.json())
+    .then(() => notification(this, 'success', 'Signed! ' + this.signed))
     .catch(error => notification(this, 'error', error))
 }
 
@@ -51,15 +69,15 @@ function mounted() {
 
 function toHex(str) {
   var result = '';
-  for (var i=0; i<str.length; i++) {
+  for (var i = 0; i < str.length; i++) {
     result += str.charCodeAt(i).toString(16);
   }
   return result;
 }
 
-function notification(ctx, type,  message) {
+function notification(ctx, type, message) {
   setTimeout(function () { ctx.error = null }, 1000)
-  ctx.message     = message;
+  ctx.message = message;
   ctx.messageType = type;
 }
 
