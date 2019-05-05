@@ -1,10 +1,13 @@
 import Vue from 'vue';
-import Ethereum from './ethereum';
+import VueResource from 'vue-resource';
+
+import Eth from 'ethjs';
 
 const candidates = require('../api.json');
 
-const BASE_API_URI = `https://a173jkxkw5.execute-api.eu-west-1.amazonaws.com/production`;
-
+const BASE_API_URI =  `https://snet-voting.herokuapp.com`
+//const BASE_API_URI = `http://localhost:8000`
+const BASE_HEADERS = { "Content-Type": "application/json" }
 function onAddCandidate(candidate) {
 
   if (this.voteComplete === true) {
@@ -46,25 +49,14 @@ function voteForCandidate(votes) {
         signature: signed
       };
     })
-    .then(body => {
-      return fetch(BASE_API_URI + `/upload`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body)
-      });
-    })
+    .then(body => this.$http.post(BASE_API_URI + `/upload`, body, BASE_HEADERS))
     .then(response => response.json())
     .then(() => notification(this, 'success', 'Signed! ' + this.signed))
     .catch(error => notification(this, 'error', error))
 }
 
 function mounted() {
-  const eth = new Ethereum()
-  eth.initialize().catch(err => {
-    console.error(err);
-  })
+  window.ethjs = new Eth(window.web3.currentProvider);
 }
 
 function toHex(str) {
@@ -80,6 +72,8 @@ function notification(ctx, type, message) {
   ctx.message = message;
   ctx.messageType = type;
 }
+
+Vue.use(VueResource);
 
 new Vue({
   el: '#app',
