@@ -26,9 +26,26 @@ $primary-invert: $pink-invert;
 // 4. Import the rest of Bulma
 */
 
+
 @import "../../node_modules/bulma/sass/utilities/initial-variables";
 
-$purple: #5a2ff1;
-$primary: $purple;
+//Fonts
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+//Branding
+$purple-dark: #08080D;
+$purple-light: #3340FF;
+
+// Hero section background image
+.has-bg-img { 
+  background: url("../images/header.png") center center; 
+  background-size:cover; 
+} 
+
+// Update Bulma's global variables
+$family-sans-serif: "Montserrat", Helvetica, sans-serif;
+$primary: $purple-light;
+$link: $purple-dark;
 
 @import "../../node_modules/bulma/bulma";

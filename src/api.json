@@ -1,7 +1,7 @@
 [
-  { "fullName":"Tiero", "description": "lorem ipsum" },
-  { "fullName":"Cassio", "description": "lorem ipsum" },
-  { "fullName":"Alberto", "description": "lorem ipsum" },
-  { "fullName":"Sophia", "description": "lorem ipsum" },
-  { "fullName":"Ben", "description": "lorem ipsum" }     
+  { "fullName":"Tiero", "description": "lorem ipsum", "hasVote": false },
+  { "fullName":"Cassio", "description": "lorem ipsum", "hasVote": false},
+  { "fullName":"Alberto", "description": "lorem ipsum", "hasVote": false},
+  { "fullName":"Sophia", "description": "lorem ipsum", "hasVote": false},
+  { "fullName":"Ben", "description": "lorem ipsum", "hasVote": false}     
 ]

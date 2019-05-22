@@ -27,7 +27,8 @@
     "postcss": "npx postcss -u autoprefixer -r src/css/*",
     "scss": "npx node-sass --output-style compressed -o src/css src/scss",
     "serve": "npx parcel --no-cache --port 8080 src/index.html",
-    "build": "npm run scss && npm run postcss && npx parcel build --no-cache src/index.html --public-url /snet-voting-ui",
+    "build-css": "npm run scss && npm run postcss",
+    "build": "npm run build-css && npx parcel build --no-cache src/index.html --public-url /snet-voting-ui",
     "deploy": "npx push-dir --dir=dist --branch=gh-pages"
   }
 }

@@ -5,29 +5,33 @@ import Eth from 'ethjs';
 
 const candidates = require('../api.json');
 
-const BASE_API_URI =  `https://snet-voting.herokuapp.com`
+const BASE_API_URI = `https://snet-voting.herokuapp.com`
 //const BASE_API_URI = `http://localhost:8000`
 const BASE_HEADERS = { "Content-Type": "application/json" }
+
+
 function onAddCandidate(candidate) {
 
-  if (this.voteComplete === true) {
-    notification(this, "error", "Info: Limit reached");
-    return;
+
+  const vindex = this.votes.findIndex(c => c === candidate.fullName);
+  const cindex = this.candidates.findIndex(c => c.fullName === candidate.fullName);
+  //Delete from votes
+  if (vindex > -1) {
+    //Untoggle
+    this.candidates.forEach((c,cindex) => { 
+      this.candidates[cindex].hasVote = false
+      this.tier = 0;
+      this.votes = [];
+    });
+  } else {
+    this.votes.push(candidate.fullName);
+    this.tier = this.tier + 1;
+    //Toggle 
+    this.candidates[cindex].hasVote = true;
   }
 
-  const found = Object.values(this.votes).find(value => value === candidate.fullName)
 
-  if (found) {
-    notification(this, "error", "Invalid: Double Entry");
-    return;
-  }
-
-  this.votes.push(candidate.fullName);
-  this.tier = this.tier + 1;
-
-  if (this.tier > 2) {
-    this.voteComplete = true;
-  }
+ 
 
 }
 
@@ -55,9 +59,6 @@ function voteForCandidate(votes) {
     .catch(error => notification(this, 'error', error))
 }
 
-function mounted() {
-  window.ethjs = new Eth(window.web3.currentProvider);
-}
 
 function toHex(str) {
   var result = '';
@@ -80,7 +81,6 @@ new Vue({
   data: {
     candidates,
     tier: 0,
-    voteComplete: false,
     votes: [],
     from: undefined,
     signed: undefined,
@@ -88,5 +88,7 @@ new Vue({
     messageType: undefined
   },
   methods: { onAddCandidate, voteForCandidate },
-  mounted
+  mounted: function () {
+    window.ethjs = new Eth(window.web3.currentProvider);
+  }
 }).$mount('#app')

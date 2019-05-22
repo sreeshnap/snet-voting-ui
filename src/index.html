@@ -10,19 +10,8 @@
 </head>
 
 <body>
-  <section class="hero is-small is-primary">
+  <section class="hero is-medium is-primary is-light has-bg-img ">
     <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8-desktop is-offset-2-desktop">
-            <h1 class="title is-2 is-spaced">
-              SingularityNET Vote
-            </h1>
-            <h2 class="subtitle is-4">
-            </h2>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
   <section class="section" id="app">
@@ -47,7 +36,7 @@
                 </li>
               </ol>
               <br />
-              <button class="button" :disabled="!voteComplete || signed" v-on:click="voteForCandidate(votes)">
+              <button class="button" :disabled="signed" v-on:click="voteForCandidate(votes)">
                 <span class="icon">
                   ✍️
                 </span>
@@ -76,12 +65,20 @@
                       </p>
                     </div>
                   </div>
-                  <div class="media-right">
-                    <button class="button" :disabled="voteComplete" v-on:click="onAddCandidate(candidate)">
+                  <div v-if="candidate.hasVote === false" class="media-right">
+                    <button class="button" v-on:click="onAddCandidate(candidate)">
                       <span class="icon">
                         🗳
                       </span>
                       <span>VOTE</span>
+                    </button>
+                  </div>
+                  <div v-else class="media-right">
+                    <button class="button" v-on:click="onAddCandidate(candidate)">
+                      <span class="icon">
+                        🙅‍♀️
+                      </span>
+                      <span>UNVOTE</span>
                     </button>
                   </div>
                 </article>
