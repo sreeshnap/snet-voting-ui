@@ -18,7 +18,7 @@ function onAddCandidate(candidate) {
   //Delete from votes
   if (vindex > -1) {
     //Untoggle
-    this.candidates.forEach((c,cindex) => { 
+    this.candidates.forEach((c, cindex) => {
       this.candidates[cindex].hasVote = false
       this.tier = 0;
       this.votes = [];
@@ -31,7 +31,7 @@ function onAddCandidate(candidate) {
   }
 
 
- 
+
 
 }
 
@@ -74,6 +74,33 @@ function notification(ctx, type, message) {
   ctx.messageType = type;
 }
 
+
+async function mounted() {
+  if (window.ethereum) {
+    console.log('Modern dapp browsers...')
+    try {
+      // Request account access if needed
+      await window.ethereum.enable();
+      // Acccounts now exposed
+      window.ethjs = new Eth(window.web3.currentProvider);
+    } catch (error) {
+      // User denied account access...
+      console.log('User denied account access...!');
+    }
+  } else if (window.web3) {
+    console.log('Legacy dapp browsers...')
+    window.web3 = new Web3(window.web3.currentProvider);
+    // Acccounts always exposed
+    provider = window.web3.currentProvider
+    window.ethjs = new Eth(window.web3.currentProvider);
+  } else {
+    // Non-dapp browsers...
+    console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+  }
+
+}
+
+
 Vue.use(VueResource);
 
 new Vue({
@@ -88,7 +115,5 @@ new Vue({
     messageType: undefined
   },
   methods: { onAddCandidate, voteForCandidate },
-  mounted: function () {
-    window.ethjs = new Eth(window.web3.currentProvider);
-  }
+  mounted: mounted,
 }).$mount('#app')
