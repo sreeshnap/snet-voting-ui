@@ -40,7 +40,7 @@ function voteForCandidate(votes) {
   const msgHash = toHex(msg);
   const from = window.web3.eth.accounts[0]
   if (!from)
-    return notification(this, "error", "Connect or Unlock Metamask and try again")
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page")
 
   this.from = from;
 
@@ -75,7 +75,7 @@ function notification(ctx, type, message) {
 }
 
 
-async function mounted() {
+async function beforeMount() {
   if (window.ethereum) {
     console.log('Modern dapp browsers...')
     try {
@@ -100,20 +100,42 @@ async function mounted() {
 
 }
 
+function mounted() {
+  const from = window.web3.eth.accounts[0];
+  if (!from)
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+  
+  this.from = from;
+  this.$http.get(BASE_API_URI + `/vote/` + from)
+    .then(response => response.json())
+    .then(receipt => {
+      if (receipt.hasOwnProperty('error'))
+        return;
+
+      this.alreadyVoted = true;
+      this.receipt      = receipt;
+    });
+
+}
+
 
 Vue.use(VueResource);
 
 new Vue({
   el: '#app',
   data: {
+    alreadyVoted: false,
+    receipt: undefined,
     candidates,
     tier: 0,
     votes: [],
     from: undefined,
     signed: undefined,
     message: null,
-    messageType: undefined
+    messageType: undefined,
+    isShowModal: false
   },
   methods: { onAddCandidate, voteForCandidate },
+  beforeMount: beforeMount,
   mounted: mounted,
 }).$mount('#app')
