@@ -50,38 +50,40 @@
             <br />
             <ol style="list-style-type: none">
               <li v-for="candidate in candidates">
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-64x64">
-                      <img src="https://versions.bulma.io/0.5.0/images/placeholders/128x128.png">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content">
-                      <p>
-                        <strong>{{candidate.fullName}}</strong>
-                        <br>
-                        {{candidate.description}}
+                <div class="box">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-128x128">
+                        <img :src="candidate.image">
                       </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <strong>{{candidate.fullName}}</strong>
+                        <p>
+                          {{candidate.description}}
+                        </p>
+                        <a :href="candidate.link" target="_blank">Profile</a>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="candidate.hasVote === false" class="media-right">
-                    <button class="button" v-on:click="onAddCandidate(candidate)">
-                      <span class="icon">
-                        🗳
-                      </span>
-                      <span>VOTE</span>
-                    </button>
-                  </div>
-                  <div v-else class="media-right">
-                    <button class="button" v-on:click="onAddCandidate(candidate)">
-                      <span class="icon">
-                        🙅‍♀️
-                      </span>
-                      <span>UNVOTE</span>
-                    </button>
-                  </div>
-                </article>
+                    <div v-if="candidate.hasVote === false" class="media-right">
+                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                        <span class="icon">
+                          🗳
+                        </span>
+                        <span>VOTE</span>
+                      </button>
+                    </div>
+                    <div v-else class="media-right">
+                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                        <span class="icon">
+                          🙅‍♀️
+                        </span>
+                        <span>UNVOTE</span>
+                      </button>
+                    </div>
+                  </article>
+                </div>
               </li>
             </ol>
           </div>
@@ -157,7 +159,7 @@
             Notes
           </strong>
           <br />
-          <br  />
+          <br />
           <ol>
             <li>The voting period will last for 24h and starts on June 12, 00:00 UTC.</li>
             <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
