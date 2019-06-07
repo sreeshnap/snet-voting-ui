@@ -12,23 +12,23 @@ const BASE_HEADERS = { "Content-Type": "application/json" }
 
 function onAddCandidate(candidate) {
 
+    const vindex = this.votes.findIndex(c => c === candidate.fullName);
+    const cindex = this.candidates.findIndex(c => c.fullName === candidate.fullName);
+    //Delete from votes
+    if (vindex > -1) {
+      //Untoggle
+      this.candidates.forEach((c, cindex) => {
+        this.candidates[cindex].hasVote = false
+        this.tier = 0;
+        this.votes = [];
+      });
+    } else if (this.tier < 3) {
 
-  const vindex = this.votes.findIndex(c => c === candidate.fullName);
-  const cindex = this.candidates.findIndex(c => c.fullName === candidate.fullName);
-  //Delete from votes
-  if (vindex > -1) {
-    //Untoggle
-    this.candidates.forEach((c, cindex) => {
-      this.candidates[cindex].hasVote = false
-      this.tier = 0;
-      this.votes = [];
-    });
-  } else {
-    this.votes.push(candidate.fullName);
-    this.tier = this.tier + 1;
-    //Toggle 
-    this.candidates[cindex].hasVote = true;
-  }
+      this.votes.push(candidate.fullName);
+      this.tier = this.tier + 1;
+      //Toggle 
+      this.candidates[cindex].hasVote = true;
+    }
 
 
 
@@ -104,7 +104,7 @@ function mounted() {
   const from = window.web3.eth.accounts[0];
   if (!from)
     return notification(this, "error", "Connect or Unlock Metamask and reload the page");
-  
+
   this.from = from;
   this.$http.get(BASE_API_URI + `/vote/` + from)
     .then(response => response.json())
@@ -113,7 +113,7 @@ function mounted() {
         return;
 
       this.alreadyVoted = true;
-      this.receipt      = receipt;
+      this.receipt = receipt;
     });
 
 }
