@@ -15,7 +15,7 @@
     </div>
   </section>
   <section class="section" id="app">
-    <div class="container">
+    <div class="container" v-if="isVotingTime">
       <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
         {{ message }}
       </div>
@@ -32,7 +32,7 @@
             <div v-if="votes.length" class="box">
               <ol>
                 <li v-for="vote in votes">
-                    {{ vote }}
+                  {{ vote }}
                 </li>
               </ol>
               <br />
@@ -101,6 +101,20 @@
         </div>
       </div>
     </div>
+    <div class="container has-text-centered" v-else>
+
+      <div class="content">
+        <h1 class="title">Vote closed</h1>
+        <p class="subtitle">
+          The SingularityNET Supervisory Council Election page will open for 24 hrs at 00:00 UTC on 12/06/19, please
+          check
+          back during this time to cast your vote
+        </p>
+          <a class="button is-medium is-info" v-on:click="isShowModal = true">
+            <strong class="has-text-weight-semibold">Instructions</strong>
+          </a>
+      </div>
+    </div>
     <div class="modal" v-bind:class="{ 'is-active': isShowModal }">
       <div class="modal-background" v-on:click="isShowModal = false"></div>
       <div class="modal-card">
@@ -109,76 +123,86 @@
           <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
         </header>
         <section class="modal-card-body">
-          The following instructions are meant to guide AGI token holders through the voting process of the
-          SingularityNET Supervisory Council Election. <br />
-          To learn more about the SingularityNET Supervisory Council, its functions, and the voting process, please read
-          this blog post. <br /><br />
+          <div class="content">
+            <p class="subtitle">
+              The following instructions are meant to guide AGI token holders through the voting process of the
+              SingularityNET Supervisory Council Election.
+            </p>
 
-          <i>
-            Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the
-            voting period.
-          </i>
-
-          <br /><br />
-          <ol>
-            <li>
-              <a>Install Metamask </a>
-              <ul>
-                <li>
-                  <a>How to use Metamask</a>
-                </li>
-                <li>
-                  <a>Connect your hardware wallet to Metamask (optional)</a>
-                </li>
-                <li>
-                  <a>Import existing private key or JSON file to Metamask (optional)</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              Be sure you have at least 1 AGI token in your Metamask/Hardware wallet for your vote to be considered
-              (your
-              vote will weight is determined according to your AGI balance)
-            </li>
-            <li>
-              Click the “VOTE” button in front of your preferred 3 candidates (order matters)¯
-            </li>
-            <li>
-              Once you have selected your top 3 nominees, click “SIGN & CONFIRM”
-            </li>
-            <li>
-              A Metamask pop-up will appear, click “SIGN”
-            </li>
-            <li>
-
-              Do not move the AGI tokens in that wallet until the voting period is over
-            </li>
-          </ol>
-
-          <br /><br />
-          <strong>
-            Notes
-          </strong>
-          <br />
-          <br />
-          <ol>
-            <li>The voting period will last for 24h and starts on June 12, 00:00 UTC.</li>
-            <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
-              AGI balance on their voting wallet.</li>
-            <li>Participants submit their vote for 3 candidates and the order in which they are selected will be
-              considered for the election.</li>
-            <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
-            <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not kept
-              their
-              AGI tokens frozen. This ensures voters can only vote once with their entire AGI balance, preventing
-              manipulation.</li>
-          </ol>
+            <p class="subtitle">
+              To learn more about the SingularityNET <a target="_blank"
+                href="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">Supervisory
+                Council</a>, its functions,
+              and the voting process, please read this <a target="_blank"
+                hrfe="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">blog post.</a>
+            </p>
 
 
+            <i>
+              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the
+              voting period.
+            </i>
 
+            <ol>
+              <li>
+                <a target="_blank" href="https://metamask.io/">Install Metamask </a>
+                <ul>
+                  <li>
+                    <a target="_blank" href="https://youtu.be/ZIGUC9JAAw8">How to use Metamask</a>
+                  </li>
+                  <li>
+                    <a target="_blank"
+                      href="https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet">Connect
+                      your hardware wallet to Metamask (optional)</a>
+                  </li>
+                  <li>
+                    <a href="https://metamask.zendesk.com/hc/en-us/articles/360015489351-Importing-Accounts">Import
+                      existing private key or JSON file to Metamask (optional)</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Be sure you have at least 1 AGI token in your Metamask/Hardware wallet for your vote to be considered
+                (your vote’s weight is determined according to your AGI balance)
+              </li>
+              <li>
+                Click the “VOTE” button in front of your preferred 3 candidates (order matters)
+              </li>
+              <li>
+                Once you have selected your top 3 nominees, click “SIGN & CONFIRM”
+              </li>
+              <li>
+                A Metamask pop-up will appear, click “SIGN”
+              </li>
+              <li>
+                Do not move the AGI tokens in that wallet until the voting period is over
+              </li>
+            </ol>
 
-          If you have any further questions, please visit the SingularityNET Supervisory Council FAQ page.
+            <strong>
+              Notes
+            </strong>
+            <br />
+            <br />
+            <ol>
+              <li>The voting period will last for 24hrs. and starts on June 12, 00:00 UTC.</li>
+              <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
+                AGI balance on their voting wallet.</li>
+              <li>Voters submit their vote for 3 candidates and the order in which they are selected will be considered
+                for the election.</li>
+              <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
+              <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not
+                kept their AGI tokens frozen for 24hrs. This ensures voters can only vote once with their entire AGI
+                balance, thus preventing manipulation.</li>
+            </ol>
 
+            <p>
+              If you have any further questions, please visit the SingularityNET Supervisory Council <a target="_blank"
+                href="https://community.singularitynet.io/t/singularitynet-supervisory-council-faq/2381/16">FAQ
+                page</a>.
+            </p>
+
+          </div>
         </section>
         <footer class="modal-card-foot">
           <button class="button" v-on:click="isShowModal = false">Cancel</button>

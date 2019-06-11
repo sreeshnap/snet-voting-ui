@@ -8,7 +8,8 @@ const candidates = require('../api.json');
 const BASE_API_URI = `https://snet-voting.herokuapp.com`
 //const BASE_API_URI = `http://localhost:8000`
 const BASE_HEADERS = { "Content-Type": "application/json" }
-
+const START_TIME   = 1560297300
+const END_TIME     = 1560384300
 
 function onAddCandidate(candidate) {
 
@@ -75,6 +76,7 @@ function notification(ctx, type, message) {
 }
 
 
+
 async function beforeMount() {
   if (window.ethereum) {
     console.log('Modern dapp browsers...')
@@ -119,6 +121,12 @@ function mounted() {
 }
 
 
+function isVotingTime() {
+  const now = parseInt(new Date().getTime()/1000);
+  const ret = now > START_TIME && now < END_TIME; 
+  return ret;
+}
+
 Vue.use(VueResource);
 
 new Vue({
@@ -136,6 +144,7 @@ new Vue({
     isShowModal: false
   },
   methods: { onAddCandidate, voteForCandidate },
+  computed: { isVotingTime },
   beforeMount: beforeMount,
   mounted: mounted,
 }).$mount('#app')

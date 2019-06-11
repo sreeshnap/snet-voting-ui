@@ -46,6 +46,6 @@ $purple-light: #3340FF;
 // Update Bulma's global variables
 $family-sans-serif: "Montserrat", Helvetica, sans-serif;
 $primary: $purple-light;
-$link: $purple-dark;
+$link: $purple-light;
 
 @import "../../node_modules/bulma/bulma";
