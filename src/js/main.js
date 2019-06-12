@@ -112,11 +112,12 @@ function mounted() {
     .then(response => response.json())
     .then(receipt => {
       if (receipt.hasOwnProperty('error'))
-        return;
+        throw receipt.error;
 
       this.alreadyVoted = true;
       this.receipt = receipt;
-    });
+    })
+    .catch(console.log);
 
 }
 
