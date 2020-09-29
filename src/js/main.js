@@ -132,6 +132,9 @@ function handleNetworkChanged() {
 }
 
 function mounted() {
+  if (!window.ethereum) {
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+  }
   const from = window.ethereum.selectedAddress;
   if (!from)
     return notification(this, "error", "Connect or Unlock Metamask and reload the page");
