@@ -14,7 +14,22 @@
     <div class="hero-body">
     </div>
   </section>
-  <section class="section" id="app">
+  <section class="section" id="app" style="padding-top: 0;">    
+      <div id="navbarBasicExample" class="navbar-menu">
+    
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary" v-on:click="isShowModal = true">
+                <strong>Instructions</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
     <div class="container" v-if="isVotingTime">
       <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
         {{ message }}
@@ -28,33 +43,14 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>Your Vote</h3>
-            <div v-if="votes.length" class="box">
-              <ol>
-                <li v-for="vote in votes">
-                  {{ vote }}
-                </li>
-              </ol>
-              <br />
-              <button class="button" :disabled="signed" v-on:click="voteForCandidate(votes)">
-                <span class="icon">
-                  ✍️
-                </span>
-                <span>SIGN & CONFIRM</span>
-              </button>
-            </div>
-            <p v-else>
-              You have not voted yet. The candidates you vote for will appear here.
-            </p>
-            <h3>Candidates</h3>
-            <p> Choose in order of preference up to 3 candidates.</p>
-            <br />
-            <ol style="list-style-type: none">
+            <h3>Voting for Hardfork</h3>
+            <p>Should you choose to accept the hardforking.</p>
+            <ol style="list-style-type: none; margin-left: 0px">
               <li v-for="candidate in candidates">
-                <div class="box">
+                <div class="box" style="padding-bottom: 10px; padding-top: 10px;">
                   <article class="media">
-                    <figure class="media-left">
-                      <p class="image is-128x128">
+                    <figure class="media-left" v-if="false">
+                      <p class="image is-64x64">
                         <img :src="candidate.image">
                       </p>
                     </figure>
@@ -64,41 +60,56 @@
                         <p>
                           {{candidate.description}}
                         </p>
-                        <a :href="candidate.link" class="button is-medium is-info" target="_blank">Profile</a>
+                        <a v-if="false" :href="candidate.link" class="button is-medium is-info" target="_blank">Profile</a>
                       </div>
                     </div>
                     <div v-if="candidate.hasVote === false" class="media-right">
-                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
                         <span class="icon">
-                          🗳
+                         ⚪️
                         </span>
                         <span>VOTE</span>
                       </button>
                     </div>
                     <div v-else class="media-right">
-                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
                         <span class="icon">
-                          🙅‍♀️
+                          ✅
                         </span>
-                        <span>UNVOTE</span>
+                        <span>VOTED</span>
                       </button>
                     </div>
                   </article>
                 </div>
               </li>
             </ol>
+            <h3>Your Vote</h3>
+            <div class="box">
+              <ol style="list-style-type: none">
+                <li v-for="vote in votes">
+                  {{ vote }}
+                </li>
+              </ol>
+              <br />
+              <button class="button" :disabled="signed || !votes.length" v-on:click="voteForCandidate(votes)">
+                <span class="icon">
+                  ✍️
+                </span>
+                <span>SIGN & CONFIRM</span>
+              </button>
+            </div>
           </div>
           <div class="content" v-else>
             <h3> You have already voted! </h3>
           </div>
         </div>
-        <div class="column is-2-desktop">
+        <!-- <div class="column is-2-desktop">
           <p class="control">
             <a class="button is-medium is-info" v-on:click="isShowModal = true">
               <strong class="has-text-weight-semibold">Instructions</strong>
             </a>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="container has-text-centered" v-else>

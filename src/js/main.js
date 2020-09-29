@@ -1,54 +1,65 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+import Web3 from "web3"
 
 import Eth from 'ethjs';
 
+const networks  = {
+  1 : "Mainnet",
+  3 : "Ropsten"
+}
+
 const candidates = require('../api.json');
 
-const BASE_API_URI = `https://snet-voting.herokuapp.com`
-//const BASE_API_URI = `http://localhost:8000`
+const BASE_API_URI = process.env.BASE_API_URI
 const BASE_HEADERS = { "Content-Type": "application/json" }
-const START_TIME   = 1560297300
-const END_TIME     = 1560384300
+const START_TIME   = process.env.START_TIME
+const END_TIME     = process.env.END_TIME
+
+
+
 
 function onAddCandidate(candidate) {
 
     const vindex = this.votes.findIndex(c => c === candidate.fullName);
     const cindex = this.candidates.findIndex(c => c.fullName === candidate.fullName);
-    //Delete from votes
-    if (vindex > -1) {
-      //Untoggle
-      this.candidates.forEach((c, cindex) => {
+
+      this.candidates.forEach((_, cindex) => {
         this.candidates[cindex].hasVote = false
         this.tier = 0;
         this.votes = [];
       });
-    } else if (this.tier < 3) {
 
-      this.votes.push(candidate.fullName);
-      this.tier = this.tier + 1;
-      //Toggle 
+      this.votes = [candidate.fullName];
       this.candidates[cindex].hasVote = true;
-    }
+}
 
-
-
-
+function getChainId() {
+  let chainIdHex = window.ethereum.chainId
+  let chainId = parseInt(chainIdHex, 16)
+  return chainId
 }
 
 function voteForCandidate(votes) {
-  const msg = votes.toString();
-  const msgHash = toHex(msg);
-  const from = window.web3.eth.accounts[0]
+  let chainId = getChainId()
+  if (chainId !== process.env.CHAIN_ID) {
+    let allowedNetwork = networks[process.env.CHAIN_ID]
+    return notification(this, "error", `Please switch to ${allowedNetwork} network.`)
+  }
+  console.log("process.network.", process.env.CHAIN_ID)
+  const msg = votes.toString()
+  // const msgHex = `0x${toPaddedHex(msg)}`;
+  
+  const from = window.ethereum.selectedAddress
   if (!from)
     return notification(this, "error", "Connect or Unlock Metamask and reload the page")
 
   this.from = from;
 
-  window.ethjs.personal_sign(msgHash, from)
+  window.web3.eth.personal.sign(msg, from)
     .then((signed) => {
       this.signed = signed;
-
+      console.log("signature",signed)
       return {
         message: msg,
         signature: signed
@@ -69,6 +80,15 @@ function toHex(str) {
   return result;
 }
 
+function toPaddedHex(string, bit = 32) {
+  const hex = toHex(string);
+  const hexLength = hex.length;
+  console.log("hexlenght", hexLength)
+  const paddedHex = window.web3.utils.padRight(hex, bit * (Math.floor(hexLength / bit) + 1));
+  console.log("padded hex", paddedHex)
+  return paddedHex;
+}
+
 function notification(ctx, type, message) {
   setTimeout(function () { ctx.error = null }, 1000)
   ctx.message = message;
@@ -85,6 +105,7 @@ async function beforeMount() {
       await window.ethereum.enable();
       // Acccounts now exposed
       window.ethjs = new Eth(window.web3.currentProvider);
+      window.web3 = new Web3(window.web3.currentProvider);
     } catch (error) {
       // User denied account access...
       console.log('User denied account access...!');
@@ -102,11 +123,20 @@ async function beforeMount() {
 
 }
 
+function handleAccountsChanged() {
+  window.ethereum.on('accountsChanged', (_accounts) => window.location.reload());
+}
+
+function handleNetworkChanged() {
+  window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+}
+
 function mounted() {
-  const from = window.web3.eth.accounts[0];
+  const from = window.ethereum.selectedAddress;
   if (!from)
     return notification(this, "error", "Connect or Unlock Metamask and reload the page");
-
+  handleAccountsChanged()
+  handleNetworkChanged()
   this.from = from;
   this.$http.get(BASE_API_URI + `/vote/` + from)
     .then(response => response.json())
