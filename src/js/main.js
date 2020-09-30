@@ -81,7 +81,7 @@ function voteForCandidate(votes) {
 
       }
       this.isLoading = false;
-      return notification(this, "Your vote has been recorded successfully!");
+      return notification(this,"success" , "Your vote has been recorded successfully!");
 
     })
     .catch((error) => {
@@ -120,7 +120,7 @@ async function beforeMount() {
     console.log("Modern dapp browsers...");
     try {
       // Request account access if needed
-      await window.ethereum.enable();
+      await ethereum.request({ method: 'eth_requestAccounts' });
       // Acccounts now exposed
       window.ethjs = new Eth(window.web3.currentProvider);
       window.web3 = new Web3(window.web3.currentProvider);
@@ -141,9 +141,8 @@ async function beforeMount() {
 }
 
 function handleAccountsChanged(that) {
-  window.ethereum.on("accountsChanged", function (_accounts) {
-    console.log("account", _accounts[0], that);
-    that.from = _accounts[0];
+  window.ethereum.on("accountsChanged", function (accounts) {
+    that.from = accounts[0];
     return;
   });
 }
@@ -151,12 +150,17 @@ function handleNetworkChanged() {
   window.ethereum.on("chainChanged", (_chainId) => window.location.reload());
 }
 
-function mounted() {
+async function mounted() {
   if (!window.ethereum) {
     return notification(this, "error", "Connect or Unlock Metamask and reload the page");
   }
-  const from = window.ethereum.selectedAddress;
-  if (!from) return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+
+  const accounts = await ethereum.request({ method: 'eth_accounts' })
+  const from = accounts[0]
+
+  if (!from) {
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+  } 
 
   let chainId = getChainId();
   if (`${chainId}` !== process.env.CHAIN_ID) {
