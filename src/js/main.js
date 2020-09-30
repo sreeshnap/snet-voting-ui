@@ -22,6 +22,27 @@ function scrollToTop() {
   }, 0);
 }
 
+function formattedDateComponentsNumber(number) {
+  return ("0" + number).slice(-2)
+}
+
+function getTimeRemaining() {
+  const endtimeEpoch = parseInt(END_TIME)
+  var deadline = new Date(endtimeEpoch * 1000);
+  var t = Date.parse(deadline) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': formattedDateComponentsNumber(hours),
+    'minutes': formattedDateComponentsNumber(minutes),
+    'seconds': formattedDateComponentsNumber(seconds)
+  };
+}
+
 function onAddCandidate(candidate) {
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual'
@@ -150,7 +171,17 @@ function handleNetworkChanged() {
   window.ethereum.on("chainChanged", (_chainId) => window.location.reload());
 }
 
+function startCountdownTimer(that) {
+  setInterval(()=>{
+    const timeRemaining = getTimeRemaining()
+    const {days, hours, minutes, seconds} = timeRemaining
+    const hoursIncludingDays = parseInt(hours) + (parseInt(days) * 24)
+    that.countdownTime = `${hoursIncludingDays} Hr -  ${minutes} Min  - ${seconds} Sec`
+  },1000)
+}
+
 async function mounted() {
+  startCountdownTimer(this);
   if (!window.ethereum) {
     return notification(this, "error", "Connect or Unlock Metamask and reload the page");
   }
@@ -206,6 +237,7 @@ new Vue({
     isShowModal: false,
     isMetamaskConnected: false,
     isLoading: false,
+    countdownTime: "00 Hr 00 Mn 00 s"
   },
   methods: { onAddCandidate, voteForCandidate },
   computed: { isVotingTime },

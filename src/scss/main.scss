@@ -51,4 +51,9 @@ $primary: $purple-dark;
 $link: $purple-light;
 $info: $purple-light;
 
+// Navigation Bar
+$navbar-height: 4.375rem;
+$navbar-item-img-max-height: 3rem;
+
+
 @import "../../node_modules/bulma/bulma";

@@ -10,16 +10,16 @@
 </head>
 
 <body>
-
+  <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem;">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
+        <img src="./images/snet-logo-white.svg" width="190" height="48">
+      </a>
+      <span style="line-height: 4.375rem;font-size: 1.45rem;font-weight: bold;">VOTING</span>
+    </div>
+  </nav>
   <section class="section" id="app" style="padding-top: 0;">    
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://singularitynet.io/">
-          <img src="./images/snet-logo-white.svg" width="112" height="28">
-        </a>
-        <span style="line-height: 52px;font-size: bo;font-weight: bold;">VOTING</span>
-      </div>
-    </nav>
+    
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
@@ -32,14 +32,15 @@
         </div>
       </div>
     </nav>
-
-
-    <div class="container" v-if="isVotingTime">
+    <div class="container" v-if="isVotingTime" >
       <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
         {{ message }}
       </div>
       <div class="columns">
         <div class="column is-8-desktop is-offset-2-desktop">
+          <div class="content" v-if="countdownTime">
+            <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
+          </div>
           <div class="content" v-if="from">
             <h3>Your Account</h3>
             <p>
