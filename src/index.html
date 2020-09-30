@@ -10,13 +10,17 @@
 </head>
 
 <body>
-  <section class="hero is-medium is-primary is-light has-bg-img ">
-    <div class="hero-body">
-    </div>
-  </section>
+
   <section class="section" id="app" style="padding-top: 0;">    
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://singularitynet.io/">
+          <img src="./images/snet-logo-white.svg" width="112" height="28">
+        </a>
+        <span style="line-height: 52px;font-size: bo;font-weight: bold;">VOTING</span>
+      </div>
+    </nav>
       <div id="navbarBasicExample" class="navbar-menu">
-    
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
@@ -43,8 +47,10 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>Voting for Hardfork</h3>
-            <p>Should you choose to accept the hardforking.</p>
+            <h3>AGI Hard Fork Voting</h3>
+            <div>
+              <p>Please vote for your preference.</p>
+            </div>
             <ol style="list-style-type: none; margin-left: 0px">
               <li v-for="candidate in candidates">
                 <div class="box" style="padding-bottom: 10px; padding-top: 10px;">
@@ -91,7 +97,7 @@
                 </li>
               </ol>
               <br />
-              <button class="button" :disabled="signed || !votes.length" v-on:click="voteForCandidate(votes)">
+              <button class="button" :disabled="signed || !votes.length || !isMetamaskConnected" v-on:click="voteForCandidate(votes)">
                 <span class="icon">
                   ✍️
                 </span>
@@ -136,22 +142,15 @@
         <section class="modal-card-body">
           <div class="content">
             <p>
-              The following instructions are meant to guide AGI token holders through the voting process of the
-              SingularityNET Supervisory Council Election.
+              The following instructions are meant to guide AGI token holders through the voting process on the AGI hard fork.
             </p>
 
             <p>
-              To learn more about the SingularityNET <a target="_blank"
-                href="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">Supervisory
-                Council</a>, its functions,
-              and the voting process, please read this <a target="_blank"
-                hrfe="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">blog post.</a>
+              To learn more about the hard fork and the reasons behind it, please read this blog post.
             </p>
 
-
             <i>
-              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the
-              voting period.
+              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the voting period.
             </i>
 
             <ol>
@@ -177,10 +176,10 @@
                 (your vote’s weight is determined according to your AGI balance)
               </li>
               <li>
-                Click the “VOTE” button in front of your preferred 3 candidates (order matters)
+                Click the "VOTE" button in front of your preferred option
               </li>
               <li>
-                Once you have selected your top 3 nominees, click “SIGN & CONFIRM”
+                Once you have selected your option, click "SIGN & CONFIRM"
               </li>
               <li>
                 A Metamask pop-up will appear, click “SIGN”
@@ -196,22 +195,14 @@
             <br />
             <br />
             <ol>
-              <li>The voting period will last for 24hrs. and starts on June 12, 00:00 UTC.</li>
+              <li>The voting period will last for 24hrs.</li>
               <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
                 AGI balance on their voting wallet.</li>
-              <li>Voters submit their vote for 3 candidates and the order in which they are selected will be considered
-                for the election.</li>
               <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
               <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not
                 kept their AGI tokens frozen for 24hrs. This ensures voters can only vote once with their entire AGI
                 balance, thus preventing manipulation.</li>
             </ol>
-
-            <p>
-              If you have any further questions, please visit the SingularityNET Supervisory Council <a target="_blank"
-                href="https://community.singularitynet.io/t/singularitynet-supervisory-council-faq/2381/16">FAQ
-                page</a>.
-            </p>
 
           </div>
         </section>
@@ -219,6 +210,18 @@
           <button class="button" v-on:click="isShowModal = false">Cancel</button>
         </footer>
       </div>
+    </div>
+    <div class="modal" v-bind:class="{ 'is-active': isLoading }">
+      <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Recording your vote...</p>
+
+    </header>
+    <section class="modal-card-body">
+      <progress class="progress is-small is-info" max="100">15%</progress>
+    </section>
+  </div>
     </div>
   </section>
   <footer class="footer has-text-centered">
