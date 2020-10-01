@@ -10,17 +10,37 @@
 </head>
 
 <body>
-  <section class="hero is-medium is-primary is-light has-bg-img ">
-    <div class="hero-body">
+  <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem;">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
+        <img src="./images/snet-logo-white.svg" width="190" height="48">
+      </a>
+      <span style="line-height: 4.375rem;font-size: 1.45rem;font-weight: bold;">VOTING</span>
     </div>
-  </section>
-  <section class="section" id="app">
-    <div class="container" v-if="isVotingTime">
+  </nav>
+  <section class="section" id="app" style="padding-top: 0;">    
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary" v-on:click="isShowModal = true">
+                <strong>Instructions</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container" v-if="isVotingTime" >
       <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
         {{ message }}
       </div>
       <div class="columns">
         <div class="column is-8-desktop is-offset-2-desktop">
+          <div class="content" v-if="countdownTime">
+            <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
+          </div>
           <div class="content" v-if="from">
             <h3>Your Account</h3>
             <p>
@@ -28,33 +48,16 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>Your Vote</h3>
-            <div v-if="votes.length" class="box">
-              <ol>
-                <li v-for="vote in votes">
-                  {{ vote }}
-                </li>
-              </ol>
-              <br />
-              <button class="button" :disabled="signed" v-on:click="voteForCandidate(votes)">
-                <span class="icon">
-                  ✍️
-                </span>
-                <span>SIGN & CONFIRM</span>
-              </button>
+            <h3>AGI Hard Fork Voting</h3>
+            <div>
+              <p>Please vote for your preference.</p>
             </div>
-            <p v-else>
-              You have not voted yet. The candidates you vote for will appear here.
-            </p>
-            <h3>Candidates</h3>
-            <p> Choose in order of preference up to 3 candidates.</p>
-            <br />
-            <ol style="list-style-type: none">
+            <ol style="list-style-type: none; margin-left: 0px">
               <li v-for="candidate in candidates">
-                <div class="box">
+                <div class="box" style="padding-bottom: 10px; padding-top: 10px;">
                   <article class="media">
-                    <figure class="media-left">
-                      <p class="image is-128x128">
+                    <figure class="media-left" v-if="false">
+                      <p class="image is-64x64">
                         <img :src="candidate.image">
                       </p>
                     </figure>
@@ -64,41 +67,56 @@
                         <p>
                           {{candidate.description}}
                         </p>
-                        <a :href="candidate.link" class="button is-medium is-info" target="_blank">Profile</a>
+                        <a v-if="false" :href="candidate.link" class="button is-medium is-info" target="_blank">Profile</a>
                       </div>
                     </div>
                     <div v-if="candidate.hasVote === false" class="media-right">
-                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
                         <span class="icon">
-                          🗳
+                         ⚪️
                         </span>
                         <span>VOTE</span>
                       </button>
                     </div>
                     <div v-else class="media-right">
-                      <button class="button is-large" v-on:click="onAddCandidate(candidate)">
+                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
                         <span class="icon">
-                          🙅‍♀️
+                          ✅
                         </span>
-                        <span>UNVOTE</span>
+                        <span>VOTED</span>
                       </button>
                     </div>
                   </article>
                 </div>
               </li>
             </ol>
+            <h3>Your Vote</h3>
+            <div class="box">
+              <ol style="list-style-type: none">
+                <li v-for="vote in votes">
+                  {{ vote }}
+                </li>
+              </ol>
+              <br />
+              <button class="button" :disabled="signed || !votes.length || !isMetamaskConnected" v-on:click="voteForCandidate(votes)">
+                <span class="icon">
+                  ✍️
+                </span>
+                <span>SIGN & CONFIRM</span>
+              </button>
+            </div>
           </div>
           <div class="content" v-else>
             <h3> You have already voted! </h3>
           </div>
         </div>
-        <div class="column is-2-desktop">
+        <!-- <div class="column is-2-desktop">
           <p class="control">
             <a class="button is-medium is-info" v-on:click="isShowModal = true">
               <strong class="has-text-weight-semibold">Instructions</strong>
             </a>
           </p>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="container has-text-centered" v-else>
@@ -125,22 +143,15 @@
         <section class="modal-card-body">
           <div class="content">
             <p>
-              The following instructions are meant to guide AGI token holders through the voting process of the
-              SingularityNET Supervisory Council Election.
+              The following instructions are meant to guide AGI token holders through the voting process on the AGI hard fork.
             </p>
 
             <p>
-              To learn more about the SingularityNET <a target="_blank"
-                href="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">Supervisory
-                Council</a>, its functions,
-              and the voting process, please read this <a target="_blank"
-                hrfe="https://blog.singularitynet.io/singularitynet-supervisory-council-e7c513fd3ea6">blog post.</a>
+              To learn more about the hard fork and the reasons behind it, please read this blog post.
             </p>
 
-
             <i>
-              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the
-              voting period.
+              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the voting period.
             </i>
 
             <ol>
@@ -166,10 +177,10 @@
                 (your vote’s weight is determined according to your AGI balance)
               </li>
               <li>
-                Click the “VOTE” button in front of your preferred 3 candidates (order matters)
+                Click the "VOTE" button in front of your preferred option
               </li>
               <li>
-                Once you have selected your top 3 nominees, click “SIGN & CONFIRM”
+                Once you have selected your option, click "SIGN & CONFIRM"
               </li>
               <li>
                 A Metamask pop-up will appear, click “SIGN”
@@ -185,22 +196,14 @@
             <br />
             <br />
             <ol>
-              <li>The voting period will last for 24hrs. and starts on June 12, 00:00 UTC.</li>
+              <li>The voting period will last for 24hrs.</li>
               <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
                 AGI balance on their voting wallet.</li>
-              <li>Voters submit their vote for 3 candidates and the order in which they are selected will be considered
-                for the election.</li>
               <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
               <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not
                 kept their AGI tokens frozen for 24hrs. This ensures voters can only vote once with their entire AGI
                 balance, thus preventing manipulation.</li>
             </ol>
-
-            <p>
-              If you have any further questions, please visit the SingularityNET Supervisory Council <a target="_blank"
-                href="https://community.singularitynet.io/t/singularitynet-supervisory-council-faq/2381/16">FAQ
-                page</a>.
-            </p>
 
           </div>
         </section>
@@ -208,6 +211,18 @@
           <button class="button" v-on:click="isShowModal = false">Cancel</button>
         </footer>
       </div>
+    </div>
+    <div class="modal" v-bind:class="{ 'is-active': isLoading }">
+      <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Recording your vote...</p>
+
+    </header>
+    <section class="modal-card-body">
+      <progress class="progress is-small is-info" max="100">15%</progress>
+    </section>
+  </div>
     </div>
   </section>
   <footer class="footer has-text-centered">

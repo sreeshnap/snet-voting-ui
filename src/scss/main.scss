@@ -34,8 +34,10 @@ $primary-invert: $pink-invert;
 
 
 //Branding
-$purple-dark: #08080D;
-$purple-light: #3340FF;
+$purple-dark: #220d3a;
+$purple-light: #4267b6;
+// #4267b6
+
 
 // Hero section background image
 .has-bg-img { 
@@ -45,7 +47,13 @@ $purple-light: #3340FF;
 
 // Update Bulma's global variables
 $family-sans-serif: "Montserrat", Helvetica, sans-serif;
-$primary: $purple-light;
+$primary: $purple-dark;
 $link: $purple-light;
+$info: $purple-light;
+
+// Navigation Bar
+$navbar-height: 4.375rem;
+$navbar-item-img-max-height: 3rem;
+
 
 @import "../../node_modules/bulma/bulma";
