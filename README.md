@@ -27,3 +27,10 @@ $ yarn build
 $ yarn deploy
 ```
 
+# Quick links
+
+## Ropsten preview
+http://ropsten-voting.singularitynet.io.s3-website-us-east-1.amazonaws.com
+
+## Mainnet application
+http://voting.singularitynet.io.s3-website-us-east-1.amazonaws.com

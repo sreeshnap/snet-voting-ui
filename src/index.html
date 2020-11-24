@@ -48,9 +48,10 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>AGI Hard Fork Voting</h3>
+            <h3>AGI Staking duration</h3>
             <div>
-              <p>Please vote for your preference.</p>
+              <p>What is your preferred duration for the stake window? Click 
+                <a href="https://staking.singularitynet.io/howitworks" target="_blank">here</a> for more details</p>
             </div>
             <ol style="list-style-type: none; margin-left: 0px">
               <li v-for="candidate in candidates">
@@ -122,11 +123,9 @@
     <div class="container has-text-centered" v-else>
 
       <div class="content">
-        <h1 class="title">Vote closed</h1>
+        <h1 class="title">Voting closed</h1>
         <p class="subtitle">
-          The SingularityNET Supervisory Council Election page will open for 24 hrs at 00:00 UTC on 12/06/19, please
-          check
-          back during this time to cast your vote
+          <!-- Add detailed message here -->
         </p>
           <a class="button is-medium is-info" v-on:click="isShowModal = true">
             <strong class="has-text-weight-semibold">Instructions</strong>
@@ -143,11 +142,11 @@
         <section class="modal-card-body">
           <div class="content">
             <p>
-              The following instructions are meant to guide AGI token holders through the voting process on the AGI hard fork.
+              The following instructions are meant to guide AGI token holders through the voting process on the change in staking periods.
             </p>
 
             <p>
-              To learn more about the hard fork and the reasons behind it, please read this blog post.
+              To learn more about the hard fork and the reasons behind it, please read this <a href="https://community.singularitynet.io/t/staking-period-change-update-community-vote-24-11-20/3235" target="_blank" rel="noreferrer noopener">blog</a> post.
             </p>
 
             <i>
@@ -196,12 +195,12 @@
             <br />
             <br />
             <ol>
-              <li>The voting period will last for 24hrs.</li>
-              <li>Token holders can participate by signing an Ethereum message that weights their vote according to the
-                AGI balance on their voting wallet.</li>
+              <li>The voting period will last for 48hrs.</li>
+              <li>Token holders can participate by signing a message with their Ethereum wallet that weights their vote according to 
+                the AGI balance on their voting wallet.</li>
               <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
               <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not
-                kept their AGI tokens frozen for 24hrs. This ensures voters can only vote once with their entire AGI
+                kept their AGI tokens frozen for 48hrs. This ensures voters can only vote once with their entire AGI
                 balance, thus preventing manipulation.</li>
             </ol>
 
