@@ -1,5 +1,4 @@
 [
-  { "fullName":"Stay at 30 days", "image":"https://cdn-images-1.medium.com/max/1600/0*kmhNyFL2lTjdKf9T", "description": "", "link": "https://community.singularitynet.io/t/david-orban/2435", "hasVote": false },
-  { "fullName":"Extend to 90 days", "image":"https://cdn-images-1.medium.com/max/1600/0*kmhNyFL2lTjdKf9T", "description": "", "link": "https://community.singularitynet.io/t/david-orban/2435", "hasVote": false },
-  { "fullName":"Extend to 180 days", "image":"https://cdn-images-1.medium.com/max/1600/0*AeUWtX3xM3MdZ4-W", "description": "", "hasVote": false}
+  { "fullName":"Yes", "image":"https://cdn-images-1.medium.com/max/1600/0*kmhNyFL2lTjdKf9T", "description": "", "link": "https://community.singularitynet.io/t/david-orban/2435", "hasVote": false },
+  { "fullName":"No", "image":"https://cdn-images-1.medium.com/max/1600/0*kmhNyFL2lTjdKf9T", "description": "", "link": "https://community.singularitynet.io/t/david-orban/2435", "hasVote": false }
 ]
