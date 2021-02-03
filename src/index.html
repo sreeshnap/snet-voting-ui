@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SNET Voting UI</title>
   <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico"/>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
 </head>
 
 <body>
@@ -48,10 +50,10 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>AGI Staking duration</h3>
+            <h3>Vote on SingularityNet Phase Two</h3>
             <div>
-              <p>What is your preferred duration for the stake window? Click 
-                <a href="https://staking.singularitynet.io/howitworks" target="_blank">here</a> for more details</p>
+              <p>Should the SingularityNET Phase Two Proposal be Implemented? A summary of the Phase Two proposal can be found 
+                <a href="https://rebrand.ly/SNPhase2" target="_blank">here</a>.</p>
             </div>
             <ol style="list-style-type: none; margin-left: 0px">
               <li v-for="candidate in candidates">
@@ -142,25 +144,25 @@
           <p class="modal-card-title">Voting Instructions</p>
           <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
         </header>
-        <section class="modal-card-body">
+        <!-- <section class="modal-card-body">
           <div class="content">
             <p>The next vote on 'The SingularityNET Phase Two proposal' will open on: Wednesday the 3rd of February 2021 at 09:00 UTC +0 and
               close on: Sunday the 7th of February 2021 at 09:00 UTC +0. </p>
               <p>Please check back during this time to take part in the vote</p>
           </div>
-        </section>
-        <!-- <section class="modal-card-body">
+        </section> -->
+        <section class="modal-card-body">
           <div class="content">
             <p>
-              The following instructions are meant to guide AGI token holders through the voting process on the change in staking periods.
+              The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal. 
             </p>
 
             <p>
-              To learn more about the hard fork and the reasons behind it, please read this <a href="https://community.singularitynet.io/t/staking-period-change-update-community-vote-24-11-20/3235" target="_blank" rel="noreferrer noopener">blog</a> post.
+              To learn more about the phase two proposal and the reasons behind it, please read this <a href="https://blog.singularitynet.io/singularitynet-phase-two-massive-token-utilization-toward-decentralized-beneficial-agi-6e3ac5a5b44a" target="_blank" rel="noreferrer noopener">blog post</a>.
             </p>
 
             <i>
-              Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved during the voting period.
+              Important Note: For your vote to be considered, your AGI balance on the voting wallet cannot be moved between the time you place your vote and the end of the voting period.
             </i>
 
             <ol>
@@ -181,10 +183,7 @@
                   </li>
                 </ul>
               </li>
-              <li>
-                Be sure you have at least 1 AGI token in your Metamask/Hardware wallet for your vote to be considered
-                (your vote’s weight is determined according to your AGI balance)
-              </li>
+              <li>Be sure you have at least 1 AGI token staked or in your Metamask/Hardware wallet for your vote to be considered - your vote's weight is determined according to your AGI balance</li>
               <li>
                 Click the "VOTE" button in front of your preferred option
               </li>
@@ -203,19 +202,15 @@
               Notes
             </strong>
             <br />
-            <br />
             <ol>
-              <li>The voting period will last for 48hrs.</li>
-              <li>Token holders can participate by signing a message with their Ethereum wallet that weights their vote according to 
-                the AGI balance on their voting wallet.</li>
-              <li>Your vote will only be submitted once you click on “SIGN & CONFIRM”.</li>
-              <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not
-                kept their AGI tokens frozen for 48hrs. This ensures voters can only vote once with their entire AGI
-                balance, thus preventing manipulation.</li>
+              <li>The voting period will last for 120hrs (96 hours vote is open + 24 hours blockchain audit) starting at 9 am on Wednesday the 3rd of February.</li>
+              <li>It is imperative that once you have voted you do not move any tokens until after the voting period ends or you will invalidate your vote.</li>
+              <li>Token holders can participate by signing a message with their Ethereum wallet that weights their vote according to the AGI balance on their voting wallet and any tokens staked using the voting wallet.</li>
+              <li>Your vote will only be submitted once you click on "SIGN & CONFIRM".</li>
+              <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not kept their AGI tokens frozen during the voting period. This ensures voters can only vote once with their entire AGI balance, thus preventing manipulation.</li>
             </ol>
-
           </div>
-        </section> -->
+        </section>
         <footer class="modal-card-foot">
           <button class="button" v-on:click="isShowModal = false">Cancel</button>
         </footer>
