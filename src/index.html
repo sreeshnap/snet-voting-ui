@@ -125,12 +125,8 @@
     <div class="container has-text-centered" v-else>
 
       <div class="content">
-        <!-- <h1 class="title">The next vote on 'The SingularityNET Phase Two proposal' will open on: Wednesday the 3rd of February 2021 at 09:00 UTC +0 and
-          close on: Sunday the 7th of February 2021 at 09:00 UTC +0. </h1>
-          <h1>Please check back during this time to take part in the vote</h1> -->
-        <h1 class="title">Voting for the SingularityNET Phase Two proposal is now closed.</h1>
-        <h1 class="title">We are tallying the votes and will get back shortly.</h1>
-        <p class="subtitle">
+        <h1 class="title">We do not have any active vote now</h1>
+        <p class="subtitle">  
           <!-- Add detailed message here -->
         </p>
         <br/>
@@ -146,14 +142,13 @@
           <p class="modal-card-title">Voting Instructions</p>
           <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
         </header>
-        <!-- <section class="modal-card-body">
-          <div class="content">
-            <p>The next vote on 'The SingularityNET Phase Two proposal' will open on: Wednesday the 3rd of February 2021 at 09:00 UTC +0 and
-              close on: Sunday the 7th of February 2021 at 09:00 UTC +0. </p>
-              <p>Please check back during this time to take part in the vote</p>
-          </div>
-        </section> -->
         <section class="modal-card-body">
+          <div class="content">
+            <p>We do not have any active voting session. We will provide instructions with details of what 
+              the vote is on and the mechanism to vote when one becomes active</p>
+          </div>
+        </section>
+        <!-- <section class="modal-card-body">
           <div class="content">
             <p>
               The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal. 
@@ -212,7 +207,7 @@
               <li>After the voting period is over, there will be a blockchain audit to disqualify voters who have not kept their AGI tokens frozen during the voting period. This ensures voters can only vote once with their entire AGI balance, thus preventing manipulation.</li>
             </ol>
           </div>
-        </section>
+        </section> -->
         <footer class="modal-card-foot">
           <button class="button" v-on:click="isShowModal = false">Cancel</button>
         </footer>
