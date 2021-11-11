@@ -74,7 +74,7 @@ function generatePlainMessageFromSelectedOptions(questions) {
         return {
           ques_id: question.ques_id,
           answer: option.value,
-          text: option.text,
+          text: question.text,
         };
       }
     })
