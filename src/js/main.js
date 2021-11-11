@@ -9,8 +9,6 @@ const networks = {
   3: "Ropsten",
 };
 
-const candidates = require("../api.json");
-
 const BASE_API_URI = process.env.BASE_API_URI;
 const BASE_HEADERS = { "Content-Type": "application/json" };
 const EVENT_ID = process.env.EVENT_ID;
@@ -57,25 +55,6 @@ function getTimeRemaining(endTime) {
     minutes: formattedDateComponentsNumber(minutes),
     seconds: formattedDateComponentsNumber(seconds),
   };
-}
-
-function onAddCandidate(candidate) {
-  if ("scrollRestoration" in window.history) {
-    window.history.scrollRestoration = "manual";
-  }
-  const vindex = this.votes.findIndex((c) => c === candidate.fullName);
-  const cindex = this.candidates.findIndex(
-    (c) => c.fullName === candidate.fullName
-  );
-
-  this.candidates.forEach((_, cindex) => {
-    this.candidates[cindex].hasVote = false;
-    this.tier = 0;
-    this.votes = [];
-  });
-
-  this.votes = [candidate.fullName];
-  this.candidates[cindex].hasVote = true;
 }
 
 function getChainId() {
@@ -329,7 +308,6 @@ new Vue({
     selectedCandidates: false,
     alreadyVoted: false,
     receipt: undefined,
-    candidates,
     tier: 0,
     votes: [],
     from: undefined,
@@ -342,7 +320,6 @@ new Vue({
     countdownTime: "00 Hr 00 Mn 00 s",
   },
   methods: {
-    onAddCandidate,
     voteForCandidate,
     onAddOption,
   },
