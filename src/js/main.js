@@ -9,25 +9,39 @@ const networks = {
   3: "Ropsten",
 };
 
-const candidates = require("../api.json");
-
 const BASE_API_URI = process.env.BASE_API_URI;
 const BASE_HEADERS = { "Content-Type": "application/json" };
-const START_TIME = process.env.START_TIME;
-const END_TIME = process.env.END_TIME;
+const EVENT_ID = process.env.EVENT_ID;
 
 function scrollToTop() {
   setTimeout(function () {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }, 0);
 }
 
 function formattedDateComponentsNumber(number) {
-  return ("0" + number).slice(-2)
+  return ("0" + number).slice(-2);
 }
 
-function getTimeRemaining() {
-  const endtimeEpoch = parseInt(END_TIME)
+function onAddOption(question, answer) {
+  let qstn = this.event.questions.find(
+    (quest) => quest.ques_id === question.ques_id
+  );
+
+  const options = qstn.options.map((option) => {
+    if (option.text === answer.text) {
+      option.selected = true;
+    } else {
+      option.selected = false;
+    }
+    return option;
+  });
+  qstn.options = options;
+  this.selectedCandidates = true;
+}
+
+function getTimeRemaining(endTime) {
+  const endtimeEpoch = parseInt(endTime);
   var deadline = new Date(endtimeEpoch * 1000);
   var t = Date.parse(deadline) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
@@ -35,29 +49,12 @@ function getTimeRemaining() {
   var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
   var days = Math.floor(t / (1000 * 60 * 60 * 24));
   return {
-    'total': t,
-    'days': days,
-    'hours': formattedDateComponentsNumber(hours),
-    'minutes': formattedDateComponentsNumber(minutes),
-    'seconds': formattedDateComponentsNumber(seconds)
+    total: t,
+    days: days,
+    hours: formattedDateComponentsNumber(hours),
+    minutes: formattedDateComponentsNumber(minutes),
+    seconds: formattedDateComponentsNumber(seconds),
   };
-}
-
-function onAddCandidate(candidate) {
-  if ('scrollRestoration' in window.history) {
-    window.history.scrollRestoration = 'manual'
-  }
-  const vindex = this.votes.findIndex((c) => c === candidate.fullName);
-  const cindex = this.candidates.findIndex((c) => c.fullName === candidate.fullName);
-
-  this.candidates.forEach((_, cindex) => {
-    this.candidates[cindex].hasVote = false;
-    this.tier = 0;
-    this.votes = [];
-  });
-
-  this.votes = [candidate.fullName];
-  this.candidates[cindex].hasVote = true;
 }
 
 function getChainId() {
@@ -66,20 +63,49 @@ function getChainId() {
   return chainId;
 }
 
+function generatePlainMessageFromSelectedOptions(questions) {
+  const questionsAndAnswers = questions
+    .map((question) => {
+      const selectedOption = question.options.filter(
+        (option) => option.selected
+      );
+      if (selectedOption.length > 0) {
+        const [option] = selectedOption;
+        return {
+          ques_id: question.ques_id,
+          answer: option.value,
+          text: option.text,
+        };
+      }
+    })
+    .filter(Boolean);
+
+  return JSON.stringify(questionsAndAnswers).toString().replace(/\\/g, "");
+}
+
 function voteForCandidate(votes) {
   this.isLoading = true;
   let chainId = getChainId();
   if (`${chainId}` !== process.env.CHAIN_ID) {
     let allowedNetwork = networks[process.env.CHAIN_ID];
     this.isLoading = false;
-    return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
+    return notification(
+      this,
+      "error",
+      `Please switch to ${allowedNetwork} network.`
+    );
   }
-  const msg = votes.toString();
+
+  const msg = generatePlainMessageFromSelectedOptions(this.event.questions);
 
   const from = window.ethereum.selectedAddress;
   if (!from) {
     this.isLoading = false;
-    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+    return notification(
+      this,
+      "error",
+      "Connect or Unlock Metamask and reload the page"
+    );
   }
 
   this.from = from;
@@ -93,22 +119,34 @@ function voteForCandidate(votes) {
         signature: signed,
       };
     })
-    .then((body) => this.$http.post(BASE_API_URI + `/vote`, body, BASE_HEADERS))
-    .then((response) => response.json())
+    .then((body) => {
+      return this.$http.post(
+        BASE_API_URI + `voting/answers/save?event_id=${EVENT_ID}`,
+        body,
+        BASE_HEADERS
+      );
+    })
     .then((response) => {
-      if (response.status === "failed") {
+      if (response.body.status === "failed") {
         this.isLoading = false;
-       return notification(this, "error", response.error.message);
-
+        return notification(this, "error", response.body.error.message);
       }
       this.isLoading = false;
-      return notification(this,"success" , "Your vote has been recorded successfully!");
-
+      return notification(
+        this,
+        "success",
+        "Your vote has been recorded successfully!"
+      );
     })
     .catch((error) => {
       this.isLoading = false;
-     return notification(this, "error", error.message ? error.message : "Unable to submit the vote. Please try again.");
-
+      return notification(
+        this,
+        "error",
+        error.message
+          ? error.message
+          : "Unable to submit the vote. Please try again."
+      );
     });
 }
 
@@ -123,7 +161,10 @@ function toHex(str) {
 function toPaddedHex(string, bit = 32) {
   const hex = toHex(string);
   const hexLength = hex.length;
-  const paddedHex = window.web3.utils.padRight(hex, bit * (Math.floor(hexLength / bit) + 1));
+  const paddedHex = window.web3.utils.padRight(
+    hex,
+    bit * (Math.floor(hexLength / bit) + 1)
+  );
   return paddedHex;
 }
 
@@ -141,7 +182,7 @@ async function beforeMount() {
     console.log("Modern dapp browsers...");
     try {
       // Request account access if needed
-      await ethereum.request({ method: 'eth_requestAccounts' });
+      await ethereum.request({ method: "eth_requestAccounts" });
       // Acccounts now exposed
       window.ethjs = new Eth(window.web3.currentProvider);
       window.web3 = new Web3(window.web3.currentProvider);
@@ -157,7 +198,9 @@ async function beforeMount() {
     window.ethjs = new Eth(window.web3.currentProvider);
   } else {
     // Non-dapp browsers...
-    console.log("Non-Ethereum browser detected. You should consider trying MetaMask!");
+    console.log(
+      "Non-Ethereum browser detected. You should consider trying MetaMask!"
+    );
   }
 }
 
@@ -172,31 +215,62 @@ function handleNetworkChanged() {
 }
 
 function startCountdownTimer(that) {
-  setInterval(()=>{
-    const timeRemaining = getTimeRemaining()
-    const {days, hours, minutes, seconds} = timeRemaining
-    const hoursIncludingDays = parseInt(hours) + (parseInt(days) * 24)
-    that.countdownTime = `${hoursIncludingDays} Hr -  ${minutes} Min  - ${seconds} Sec`
-  },1000)
+  setInterval(() => {
+    const timeRemaining = getTimeRemaining(that.event.end_period);
+    const { days, hours, minutes, seconds } = timeRemaining;
+    const hoursIncludingDays = parseInt(hours) + parseInt(days) * 24;
+    that.countdownTime = `${hoursIncludingDays} Hr -  ${minutes} Min  - ${seconds} Sec`;
+  }, 1000);
+}
+
+function getQuestions(that) {
+  that.$http
+    .get(BASE_API_URI + `voting/questions?event_id=${EVENT_ID}`, BASE_HEADERS)
+    .then((response) => {
+      let event = response.data.data;
+      event.questions.forEach((question) => {
+        question.options.forEach((option) => {
+          option.selected = false;
+        });
+      });
+      event.eventName = event.event_name;
+      event.endPeriod = event.end_period;
+      event.startPeriod = event.start_period;
+      that.event = event;
+    });
 }
 
 async function mounted() {
   startCountdownTimer(this);
   if (!window.ethereum) {
-    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
+    return notification(
+      this,
+      "error",
+      "Connect or Unlock Metamask and reload the page"
+    );
   }
 
-  const accounts = await ethereum.request({ method: 'eth_accounts' })
-  const from = accounts[0]
+  getQuestions(this);
+
+  const accounts = await ethereum.request({ method: "eth_accounts" });
+  const from = accounts[0];
 
   if (!from) {
-    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
-  } 
+    return notification(
+      this,
+      "error",
+      "Connect or Unlock Metamask and reload the page"
+    );
+  }
 
   let chainId = getChainId();
   if (`${chainId}` !== process.env.CHAIN_ID) {
     let allowedNetwork = networks[process.env.CHAIN_ID];
-    return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
+    return notification(
+      this,
+      "error",
+      `Please switch to ${allowedNetwork} network.`
+    );
   }
   this.isMetamaskConnected = true;
   handleAccountsChanged(this);
@@ -216,7 +290,7 @@ async function mounted() {
 
 function isVotingTime() {
   const now = parseInt(new Date().getTime() / 1000);
-  const ret = now > START_TIME && now < END_TIME;
+  const ret = now > this.event.startPeriod && now < this.event.endPeriod;
   return ret;
 }
 
@@ -225,9 +299,15 @@ Vue.use(VueResource);
 new Vue({
   el: "#app",
   data: {
+    event: {
+      eventName: "",
+      startPeriod: 0,
+      endPeriod: 0,
+      questions: [],
+    },
+    selectedCandidates: false,
     alreadyVoted: false,
     receipt: undefined,
-    candidates,
     tier: 0,
     votes: [],
     from: undefined,
@@ -237,9 +317,12 @@ new Vue({
     isShowModal: false,
     isMetamaskConnected: false,
     isLoading: false,
-    countdownTime: "00 Hr 00 Mn 00 s"
+    countdownTime: "00 Hr 00 Mn 00 s",
   },
-  methods: { onAddCandidate, voteForCandidate },
+  methods: {
+    voteForCandidate,
+    onAddOption,
+  },
   computed: { isVotingTime },
   beforeMount: beforeMount,
   mounted: mounted,

@@ -50,31 +50,31 @@
             </p>
           </div>
           <div class="content" v-if="alreadyVoted === false">
-            <h3>Vote on Decentralized Ecosystem Projects funding pool(DEEP)</h3>
+
+            <h3>{{event.eventName}}</h3>
+
+            <div v-for="question in event.questions" :key="question.ques_id">
+            
+            <h3>{{question.heading}}</h3>
             <div>
-              <p>Do you accept the proposal for DEEP funding? A summary of the deep funding can be found
-                <a href="https://community.singularitynet.io/t/deep-funding-brainstorming/3383" target="_blank">here</a>.</p>
+              <p>{{question.text}}</p>
             </div>
-            <ol style="list-style-type: none; margin-left: 0px">
-              <li v-for="candidate in candidates">
+            <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px;">
+              <li v-for="option in question.options" >
                 <div class="box" style="padding-bottom: 10px; padding-top: 10px;">
                   <article class="media">
                     <figure class="media-left" v-if="false">
                       <p class="image is-64x64">
-                        <img :src="candidate.image">
+                        <img :src="option.image">
                       </p>
                     </figure>
                     <div class="media-content">
                       <div class="content">
-                        <strong>{{candidate.fullName}}</strong>
-                        <p>
-                          {{candidate.description}}
-                        </p>
-                        <a v-if="false" :href="candidate.link" class="button is-medium is-info" target="_blank">Profile</a>
+                        <strong>{{option.text}}</strong>
                       </div>
                     </div>
-                    <div v-if="candidate.hasVote === false" class="media-right">
-                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
+                    <div v-if="option.selected === false" class="media-right">
+                      <button class="button is-medium" v-on:click="onAddOption(question, option)">
                         <span class="icon">
                          ⚪️
                         </span>
@@ -82,7 +82,7 @@
                       </button>
                     </div>
                     <div v-else class="media-right">
-                      <button class="button is-medium" v-on:click="onAddCandidate(candidate)">
+                      <button class="button is-medium" v-on:click="onAddOption(question, option)">
                         <span class="icon">
                           ✅
                         </span>
@@ -93,15 +93,10 @@
                 </div>
               </li>
             </ol>
+            </div>
             <h3>Your Vote</h3>
             <div class="box">
-              <ol style="list-style-type: none">
-                <li v-for="vote in votes">
-                  {{ vote }}
-                </li>
-              </ol>
-              <br />
-              <button class="button" :disabled="signed || !votes.length || !isMetamaskConnected" v-on:click="voteForCandidate(votes)">
+              <button class="button" :disabled="signed || !selectedCandidates || !isMetamaskConnected" v-on:click="voteForCandidate(votes)">
                 <span class="icon">
                   ✍️
                 </span>
