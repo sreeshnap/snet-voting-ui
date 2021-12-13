@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "autoprefixer": "^9.5.0",
-    "bulma": "^0.7.2",
     "cpx": "^1.5.0",
     "ethjs": "^0.4.0",
     "ethjs-signer": "^0.1.1",
@@ -29,10 +28,14 @@
   "scripts": {
     "postcss": "npx postcss -u autoprefixer -r src/css/*",
     "scss": "npx node-sass --output-style compressed -o src/css src/scss",
-    "serve": "npx parcel --no-cache --port 8080 src/index.html",
+    "serve": "npm run build-css && npx parcel --no-cache --port 8080 src/index.html",
     "build-css": "npm run scss && npm run postcss",
     "build": "npm run build-css && npx parcel build --no-cache src/index.html",
     "clean:build": "rm -rf dist/ && yarn build",
     "deploy": "npx cpx CNAME dist && npx push-dir --dir=dist --branch=gh-pages"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bulma": "^0.9.3"
   }
 }

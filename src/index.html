@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SNET Voting UI</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SNET Voting UI</title>
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="icon" type="image/x-icon" href="./images/favicon.ico"/>
-  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
-</head>
-
-<body>
-  <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem;">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
-        <img src="./images/snet-logo-white.svg" width="190" height="48">
-      </a>
-      <span style="line-height: 4.375rem;font-size: 1.45rem;font-weight: bold;">VOTING</span>
-    </div>
-  </nav>
-  <section class="section" id="app" style="padding-top: 0;">    
-    
-      <div id="navbarBasicExample" class="navbar-menu">
+  <body>
+    <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
+          <img src="./images/snet-logo-white.svg" width="190" height="48" />
+        </a>
+        <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
+      </div>
+    </nav>
+    <section class="section" id="app">
+      <!-- <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
@@ -32,118 +30,257 @@
             </div>
           </div>
         </div>
-      </div>
-    </nav>
-    <div class="container" v-if="isVotingTime" >
-      <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
-        {{ message }}
-      </div>
-      <div class="columns">
-        <div class="column is-8-desktop is-offset-2-desktop">
-          <div class="content" v-if="countdownTime">
-            <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
-          </div>
-          <div class="content" v-if="from">
-            <h3>Your Account</h3>
-            <p>
-              {{ from }}
-            </p>
-          </div>
-          <div class="content" v-if="alreadyVoted === false">
-
-            <h3>{{event.eventName}}</h3>
-
-            <div v-for="question in event.questions" :key="question.ques_id">
-            
-            <h3>{{question.heading}}</h3>
-            <div>
-              <p>{{question.text}}</p>
-            </div>
-            <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px;">
-              <li v-for="option in question.options" >
-                <div class="box" style="padding-bottom: 10px; padding-top: 10px;">
-                  <article class="media">
-                    <figure class="media-left" v-if="false">
-                      <p class="image is-64x64">
-                        <img :src="option.image">
-                      </p>
-                    </figure>
-                    <div class="media-content">
-                      <div class="content">
-                        <strong>{{option.text}}</strong>
-                      </div>
-                    </div>
-                    <div v-if="option.selected === false" class="media-right">
-                      <button class="button is-medium" v-on:click="onAddOption(question, option)">
-                        <span class="icon">
-                         ⚪️
-                        </span>
-                        <span>VOTE</span>
-                      </button>
-                    </div>
-                    <div v-else class="media-right">
-                      <button class="button is-medium" v-on:click="onAddOption(question, option)">
-                        <span class="icon">
-                          ✅
-                        </span>
-                        <span>VOTED</span>
-                      </button>
-                    </div>
-                  </article>
-                </div>
-              </li>
-            </ol>
-            </div>
-            <h3>Your Vote</h3>
-            <div class="box">
-              <button class="button" :disabled="signed || !selectedCandidates || !isMetamaskConnected" v-on:click="voteForCandidate(votes)">
-                <span class="icon">
-                  ✍️
-                </span>
-                <span>SIGN & CONFIRM</span>
-              </button>
-            </div>
-          </div>
-          <div class="content" v-else>
-            <h3> You have already voted! </h3>
+      </div> -->
+      <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+        <div><button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button></div>
+        <div>
+          <div class="buttons">
+            <a class="button is-primary" v-on:click="isShowModal = true">
+              <strong>Instructions</strong>
+            </a>
           </div>
         </div>
-        <!-- <div class="column is-2-desktop">
-          <p class="control">
+      </div>
+
+      <!-- IF Loading Proposals -->
+      <div v-if="loading.proposals" class="content">
+        <h3>Loading proposals</h3>
+        <progress class="progress is-small is-info" max="100">15%</progress>
+      </div>
+      <!-- IF Proposals loaded -->
+      <div v-else>
+        <!-- IF Selected a Proposal -->
+        <div v-if="!!selectedProposal">
+          <div>
+            <div
+              v-if="message"
+              class="notification"
+              v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
+            >
+              {{ message }}
+            </div>
+
+            <div class="columns">
+              <div class="column is-8-desktop is-offset-2-desktop">
+                <div class="content" v-if="from">
+                  <h3>Your Account</h3>
+                  <p>{{ from }}</p>
+                </div>
+                <div class="content" v-if="alreadyVoted === false">
+                  <h3>Proposal</h3>
+
+                  <div>
+                    <h3>{{selectedProposal.question}}</h3>
+                    <div>
+                      <p>{{selectedProposal.description}}</p>
+                    </div>
+                    <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
+                      <li v-for="option in selectedProposal.options">
+                        <div class="box pointer my-1" v-on:click="selectedOption = option.key">
+                          <article class="media">
+                            <!-- <figure class="media-left" v-if="false">
+                            <p class="image is-64x64">
+                              <img :src="option.image" />
+                            </p>
+                          </figure> -->
+                            <div class="media-content">
+                              <div class="content">
+                                <strong>{{option.value}}</strong>
+                              </div>
+                            </div>
+                            <div v-if="selectedOption == option.key" class="media-right">
+                              <button class="button is-medium" v-on:click="selectedOption = option.key">
+                                <span class="icon"> ✅ </span>
+                                <span>VOTED</span>
+                              </button>
+                            </div>
+                            <div v-else class="media-right">
+                              <button class="button is-medium" v-on:click="selectedOption = option.key">
+                                <span class="icon"> ⚪️ </span>
+                                <span>VOTE</span>
+                              </button>
+                            </div>
+                          </article>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                  <h3>Your Vote</h3>
+                  <div class="box">
+                    <button
+                      class="button"
+                      :disabled="signed || !selectedOption || !isMetamaskConnected"
+                      v-on:click="submitVote()"
+                    >
+                      <span class="icon"> ✍️ </span>
+                      <span>SIGN & CONFIRM</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="content" v-else>
+                  <h3>You have already voted!</h3>
+                </div>
+              </div>
+              <!-- <div class="column is-2-desktop">
+            <p class="control">
+              <a class="button is-medium is-info" v-on:click="isShowModal = true">
+                <strong class="has-text-weight-semibold">Instructions</strong>
+              </a>
+            </p>
+          </div> -->
+            </div>
+          </div>
+        </div>
+        <!-- IF there is no selected proposal -->
+        <div v-else>
+          <!-- IF Proposals are populated -->
+          <div v-if="!!proposals" class="proposal">
+            <div class="content">
+              <h3>Active</h3>
+              <ul>
+                <li
+                  v-for="activeProposal in proposals.active"
+                  :key="activeProposal.question_id"
+                  class="card"
+                  v-on:click="selectedProposal = activeProposal"
+                >
+                  <div class="card-content">
+                    <p>{{activeProposal.question}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="content" v-if="proposals.inactive && proposals.inactive.length > 0">
+              <h3>Inactive</h3>
+              <ul>
+                <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
+                  <div class="card-content">
+                    <p>{{activeProposal.question}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- IF Proposals are not populated -->
+          <div v-else>We have no proposals</div>
+        </div>
+      </div>
+
+      <!-- HIDING EVERYTHING BELOW -->
+      <div v-if="true"></div>
+      <div v-else>
+        <div class="container" v-if="isVotingTime">
+          <div
+            v-if="message"
+            class="notification"
+            v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
+          >
+            {{ message }}
+          </div>
+          <div class="columns">
+            <div class="column is-8-desktop is-offset-2-desktop">
+              <div class="content" v-if="countdownTime">
+                <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
+              </div>
+              <div class="content" v-if="from">
+                <h3>Your Account</h3>
+                <p>{{ from }}</p>
+              </div>
+              <div class="content" v-if="alreadyVoted === false">
+                <h3>{{event.eventName}}</h3>
+
+                <div v-for="question in event.questions" :key="question.ques_id">
+                  <h3>{{question.heading}}</h3>
+                  <div>
+                    <p>{{question.text}}</p>
+                  </div>
+                  <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
+                    <li v-for="option in question.options">
+                      <div class="box" style="padding-bottom: 10px; padding-top: 10px">
+                        <article class="media">
+                          <figure class="media-left" v-if="false">
+                            <p class="image is-64x64">
+                              <img :src="option.image" />
+                            </p>
+                          </figure>
+                          <div class="media-content">
+                            <div class="content">
+                              <strong>{{option.text}}</strong>
+                            </div>
+                          </div>
+                          <div v-if="option.selected === false" class="media-right">
+                            <button class="button is-medium" v-on:click="onAddOption(question, option)">
+                              <span class="icon"> ⚪️ </span>
+                              <span>VOTE</span>
+                            </button>
+                          </div>
+                          <div v-else class="media-right">
+                            <button class="button is-medium" v-on:click="onAddOption(question, option)">
+                              <span class="icon"> ✅ </span>
+                              <span>VOTED</span>
+                            </button>
+                          </div>
+                        </article>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+                <h3>Your Vote</h3>
+                <div class="box">
+                  <button
+                    class="button"
+                    :disabled="signed || !selectedCandidates || !isMetamaskConnected"
+                    v-on:click="voteForCandidate(votes)"
+                  >
+                    <span class="icon"> ✍️ </span>
+                    <span>SIGN & CONFIRM</span>
+                  </button>
+                </div>
+              </div>
+              <div class="content" v-else>
+                <h3>You have already voted!</h3>
+              </div>
+            </div>
+            <!-- <div class="column is-2-desktop">
+            <p class="control">
+              <a class="button is-medium is-info" v-on:click="isShowModal = true">
+                <strong class="has-text-weight-semibold">Instructions</strong>
+              </a>
+            </p>
+          </div> -->
+          </div>
+        </div>
+        <div class="container has-text-centered" v-else>
+          <div class="content">
+            <h1 class="title">We do not have any active vote now</h1>
+            <p class="subtitle">
+              <!-- Add detailed message here -->
+            </p>
+            <br />
             <a class="button is-medium is-info" v-on:click="isShowModal = true">
               <strong class="has-text-weight-semibold">Instructions</strong>
             </a>
-          </p>
-        </div> -->
-      </div>
-    </div>
-    <div class="container has-text-centered" v-else>
-
-      <div class="content">
-        <h1 class="title">We do not have any active vote now</h1>
-        <p class="subtitle">  
-          <!-- Add detailed message here -->
-        </p>
-        <br/>
-          <a class="button is-medium is-info" v-on:click="isShowModal = true">
-            <strong class="has-text-weight-semibold">Instructions</strong>
-          </a>
-      </div>
-    </div>
-    <div class="modal" v-bind:class="{ 'is-active': isShowModal }">
-      <div class="modal-background" v-on:click="isShowModal = false"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Voting Instructions</p>
-          <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="content">
-            <p>We do not have any active voting session. We will provide instructions with details of what 
-              the vote is on and the mechanism to vote when one becomes active</p>
           </div>
-        </section>
-        <!-- <section class="modal-card-body">
+        </div>
+      </div>
+      <!-- HIDDEN TILL HERE -->
+
+      <div class="modal" v-bind:class="{ 'is-active': isShowModal }">
+        <div class="modal-background" v-on:click="isShowModal = false"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Voting Instructions</p>
+            <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="content">
+              <p>
+                We do not have any active voting session. We will provide instructions with details of what the vote is
+                on and the mechanism to vote when one becomes active
+              </p>
+            </div>
+          </section>
+          <!-- <section class="modal-card-body">
           <div class="content">
             <p>
               The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal. 
@@ -203,38 +340,36 @@
             </ol>
           </div>
         </section> -->
-        <footer class="modal-card-foot">
-          <button class="button" v-on:click="isShowModal = false">Cancel</button>
-        </footer>
-      </div>
-    </div>
-    <div class="modal" v-bind:class="{ 'is-active': isLoading }">
-      <div class="modal-background"></div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Recording your vote...</p>
-
-    </header>
-    <section class="modal-card-body">
-      <progress class="progress is-small is-info" max="100">15%</progress>
-    </section>
-  </div>
-    </div>
-  </section>
-  <footer class="footer has-text-centered">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-8-desktop is-offset-2-desktop">
-          <p>
-            <strong class="has-text-weight-semibold">
-              <a href="https://SingularityNET.io">© SingularityNET Foundation</a>
-            </strong>
-          </p>
+          <footer class="modal-card-foot">
+            <button class="button" v-on:click="isShowModal = false">Cancel</button>
+          </footer>
         </div>
       </div>
-    </div>
-  </footer>
-  <script type="text/javascript" src="js/main.js"></script>
-</body>
-
+      <div class="modal" v-bind:class="{ 'is-active': loading.submitVote }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Recording your vote...</p>
+          </header>
+          <section class="modal-card-body">
+            <progress class="progress is-small is-info" max="100">15%</progress>
+          </section>
+        </div>
+      </div>
+    </section>
+    <footer class="footer has-text-centered">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8-desktop is-offset-2-desktop">
+            <p>
+              <strong class="has-text-weight-semibold">
+                <a href="https://SingularityNET.io">© SingularityNET Foundation</a>
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
 </html>
