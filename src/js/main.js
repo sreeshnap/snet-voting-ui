@@ -3,6 +3,7 @@ import VueResource from "vue-resource";
 import Web3 from "web3";
 
 import Eth from "ethjs";
+import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
 
 const networks = {
   1: "Mainnet",
@@ -23,22 +24,20 @@ function formattedDateComponentsNumber(number) {
   return ("0" + number).slice(-2);
 }
 
-function onAddOption(question, answer) {
-  let qstn = this.event.questions.find(
-    (quest) => quest.ques_id === question.ques_id
-  );
+// function onAddOption(question, answer) {
+//   let qstn = this.event.questions.find((quest) => quest.ques_id === question.ques_id);
 
-  const options = qstn.options.map((option) => {
-    if (option.text === answer.text) {
-      option.selected = true;
-    } else {
-      option.selected = false;
-    }
-    return option;
-  });
-  qstn.options = options;
-  this.selectedCandidates = true;
-}
+//   const options = qstn.options.map((option) => {
+//     if (option.text === answer.text) {
+//       option.selected = true;
+//     } else {
+//       option.selected = false;
+//     }
+//     return option;
+//   });
+//   qstn.options = options;
+//   this.selectedCandidates = true;
+// }
 
 function getTimeRemaining(endTime) {
   const endtimeEpoch = parseInt(endTime);
@@ -63,89 +62,54 @@ function getChainId() {
   return chainId;
 }
 
-function generatePlainMessageFromSelectedOptions(questions) {
-  const questionsAndAnswers = questions
-    .map((question) => {
-      const selectedOption = question.options.filter(
-        (option) => option.selected
-      );
-      if (selectedOption.length > 0) {
-        const [option] = selectedOption;
-        return {
-          ques_id: question.ques_id,
-          answer: option.value,
-          text: question.text,
-        };
-      }
-    })
-    .filter(Boolean);
-
-  return JSON.stringify(questionsAndAnswers).toString().replace(/\\/g, "");
-}
-
-function voteForCandidate(votes) {
-  this.isLoading = true;
+function submitVote() {
+  this.loading.submitVote = true;
   let chainId = getChainId();
   if (`${chainId}` !== process.env.CHAIN_ID) {
     let allowedNetwork = networks[process.env.CHAIN_ID];
-    this.isLoading = false;
-    return notification(
-      this,
-      "error",
-      `Please switch to ${allowedNetwork} network.`
-    );
+    this.loading.submitVote = false;
+    return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
   }
 
-  const msg = generatePlainMessageFromSelectedOptions(this.event.questions);
+  const msg = getMessageToSign(this.selectedProposal, this.selectedOption);
 
   const from = window.ethereum.selectedAddress;
   if (!from) {
-    this.isLoading = false;
-    return notification(
-      this,
-      "error",
-      "Connect or Unlock Metamask and reload the page"
-    );
+    this.loading.submitVote = false;
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
   }
 
   this.from = from;
-
+  console.log("message to sign", msg.string);
   window.web3.eth.personal
-    .sign(msg, from)
+    .sign(msg.string, from)
     .then((signed) => {
       this.signed = signed;
       return {
-        message: msg,
+        message: msg.string,
         signature: signed,
       };
     })
     .then((body) => {
-      return this.$http.post(
-        BASE_API_URI + `voting/answers/save?event_id=${EVENT_ID}`,
-        body,
-        BASE_HEADERS
-      );
+      console.log("signature", body);
+      // return this.$http.post(BASE_API_URI + `voting/answers/save?event_id=${EVENT_ID}`, body, BASE_HEADERS);
+      return saveProposal(from, msg.raw, body.signature);
     })
     .then((response) => {
-      if (response.body.status === "failed") {
-        this.isLoading = false;
-        return notification(this, "error", response.body.error.message);
+      console.log("repsonse.....", response);
+      if (response.status === "failed") {
+        this.loading.submitVote = false;
+        return notification(this, "error", response.error.message);
       }
-      this.isLoading = false;
-      return notification(
-        this,
-        "success",
-        "Your vote has been recorded successfully!"
-      );
+      this.loading.submitVote = false;
+      return notification(this, "success", "Your vote has been recorded successfully!");
     })
     .catch((error) => {
-      this.isLoading = false;
+      this.loading.submitVote = false;
       return notification(
         this,
         "error",
-        error.message
-          ? error.message
-          : "Unable to submit the vote. Please try again."
+        error.message ? error.message : "Unable to submit the vote. Please try again."
       );
     });
 }
@@ -161,17 +125,14 @@ function toHex(str) {
 function toPaddedHex(string, bit = 32) {
   const hex = toHex(string);
   const hexLength = hex.length;
-  const paddedHex = window.web3.utils.padRight(
-    hex,
-    bit * (Math.floor(hexLength / bit) + 1)
-  );
+  const paddedHex = window.web3.utils.padRight(hex, bit * (Math.floor(hexLength / bit) + 1));
   return paddedHex;
 }
 
 function notification(ctx, type, message) {
   setTimeout(function () {
-    ctx.error = null;
-  }, 1000);
+    ctx.message = undefined;
+  }, 2000);
   ctx.message = message;
   ctx.messageType = type;
   scrollToTop();
@@ -198,15 +159,14 @@ async function beforeMount() {
     window.ethjs = new Eth(window.web3.currentProvider);
   } else {
     // Non-dapp browsers...
-    console.log(
-      "Non-Ethereum browser detected. You should consider trying MetaMask!"
-    );
+    console.log("Non-Ethereum browser detected. You should consider trying MetaMask!");
   }
 }
 
 function handleAccountsChanged(that) {
   window.ethereum.on("accountsChanged", function (accounts) {
     that.from = accounts[0];
+    getProposals(that, accounts[0]);
     return;
   });
 }
@@ -223,69 +183,29 @@ function startCountdownTimer(that) {
   }, 1000);
 }
 
-function getQuestions(that) {
-  that.$http
-    .get(BASE_API_URI + `voting/questions?event_id=${EVENT_ID}`, BASE_HEADERS)
-    .then((response) => {
-      let event = response.data.data;
-      event.questions.forEach((question) => {
-        question.options.forEach((option) => {
-          option.selected = false;
-        });
-      });
-      event.eventName = event.event_name;
-      event.endPeriod = event.end_period;
-      event.startPeriod = event.start_period;
-      that.event = event;
-    });
-}
-
 async function mounted() {
+  getProposals(this);
   startCountdownTimer(this);
   if (!window.ethereum) {
-    return notification(
-      this,
-      "error",
-      "Connect or Unlock Metamask and reload the page"
-    );
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
   }
-
-  getQuestions(this);
 
   const accounts = await ethereum.request({ method: "eth_accounts" });
   const from = accounts[0];
 
   if (!from) {
-    return notification(
-      this,
-      "error",
-      "Connect or Unlock Metamask and reload the page"
-    );
+    return notification(this, "error", "Connect or Unlock Metamask and reload the page");
   }
-
+  getProposals(this, from);
   let chainId = getChainId();
   if (`${chainId}` !== process.env.CHAIN_ID) {
     let allowedNetwork = networks[process.env.CHAIN_ID];
-    return notification(
-      this,
-      "error",
-      `Please switch to ${allowedNetwork} network.`
-    );
+    return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
   }
   this.isMetamaskConnected = true;
   handleAccountsChanged(this);
   handleNetworkChanged();
   this.from = from;
-  this.$http
-    .get(BASE_API_URI + `/vote/` + from)
-    .then((response) => response.json())
-    .then((receipt) => {
-      if (receipt.hasOwnProperty("error")) throw receipt.error;
-
-      this.alreadyVoted = true;
-      this.receipt = receipt;
-    })
-    .catch(console.log);
 }
 
 function isVotingTime() {
@@ -316,12 +236,18 @@ new Vue({
     messageType: undefined,
     isShowModal: false,
     isMetamaskConnected: false,
-    isLoading: false,
     countdownTime: "00 Hr 00 Mn 00 s",
+    proposals: undefined,
+    selectedProposal: undefined,
+    selectedOption: undefined,
+    loading: { proposals: false, submitVote: false },
   },
   methods: {
-    voteForCandidate,
-    onAddOption,
+    submitVote,
+    closeSelectedProposal() {
+      closeSelectedProposal(this);
+    },
+    // onAddOption,
   },
   computed: { isVotingTime },
   beforeMount: beforeMount,
