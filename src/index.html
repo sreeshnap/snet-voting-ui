@@ -71,8 +71,9 @@
 
                   <div>
                     <h3>{{selectedProposal.question}}</h3>
-                    <div>
+                    <div class="box">
                       <p>{{selectedProposal.description}}</p>
+                      <a :href="selectedProposal.details_url" target="_blank">Click here to know more</a>
                     </div>
                     <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
                       <li v-for="option in selectedProposal.options">
@@ -146,6 +147,7 @@
                 >
                   <div class="card-content">
                     <p>{{activeProposal.question}}</p>
+                    <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
                   </div>
                 </li>
               </ul>
@@ -155,7 +157,10 @@
               <ul>
                 <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
                   <div class="card-content">
-                    <p>{{activeProposal.question}}</p>
+                    <p>{{inactiveProposal.question}}</p>
+                    <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
+                      {{inactiveProposal.details_url}}
+                      </a>
                   </div>
                 </li>
               </ul>
