@@ -72,3 +72,56 @@ $navbar-item-img-max-height: 3rem;
 .media-content .content {
   line-height: 50px;
 }
+
+.footer {
+  background-color: #211d24;
+  text-align: left;
+
+  a {
+    display: block;
+    opacity: 0.6;
+    color: #fff;
+    font-size: 14px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .column {
+    text-align: left;
+  }
+
+  .logo-links {
+    display: inline-block;
+    text-align: right;
+    line-height: 60px;
+
+    a {
+      display: inline-block;
+      margin: 0px 10px;
+    }
+  }
+
+  p {
+    color: #fff;
+    font-size: 18px;
+  }
+  .copyright p {
+    opacity: 0.6;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .social-links {
+    display: inline-block;
+    text-align: right;
+    a {
+      display: inline-block;
+      margin-left: 15px;
+      font-size: 30px;
+    }
+  }
+}
+
+.text-right {
+  text-align: right;
+}

@@ -345,9 +345,9 @@
             </ol>
           </div>
         </section> -->
-          <footer class="modal-card-foot">
+          <div class="modal-card-foot">
             <button class="button" v-on:click="isShowModal = false">Cancel</button>
-          </footer>
+          </div>
         </div>
       </div>
       <div class="modal" v-bind:class="{ 'is-active': loading.submitVote }">
@@ -362,19 +362,65 @@
         </div>
       </div>
     </section>
+    <!-- FOOTER -->
     <footer class="footer has-text-centered">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8-desktop is-offset-2-desktop">
-            <p>
-              <strong class="has-text-weight-semibold">
-                <a href="https://SingularityNET.io">© SingularityNET Foundation</a>
-              </strong>
-            </p>
-          </div>
+      <!-- LOGO With Rightside Links -->
+      <div class="columns logo-block">
+        <div class="column">
+          <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
+        </div>
+        <div class="column logo-links">
+          <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
+          <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White Paper</a>
+          <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
+        </div>
+      </div>
+      <hr />
+      <!-- Main Footer Links -->
+      <div class="columns" >
+        <div class="column">
+          <p>Ai Marketplace</p>
+          <a href="https://beta.singularitynet.io/" target="_blank" rel="noreferrer noopener">Free Signup</a>
+          <a href="https://dev.singularitynet.io/tutorials/getting-started/" target="_blank" rel="noreferrer noopener">Get Started</a>
+          <a href="https://dev.singularitynet.io/docs/concepts/" target="_blank" rel="noreferrer noopener">Core Concepts</a>
+          <a href="https://dev.singularitynet.io/tutorials/" target="_blank" rel="noreferrer noopener">Tutorials</a>
+        </div>
+        <div class="column">
+          <p>Ai Marketplace</p>
+          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Documentation</a>
+          <a href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">Telegram</a>
+          <a href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">Forum</a>
+          <a href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">Blog</a>
+        </div>
+        <div class="column">
+          <p>Ai Marketplace</p>
+          <a href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">Developer Portal</a>
+          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Github</a>
+        </div>
+        <div class="column">
+          <p>Ai Marketplace</p>
+          <a href="https://metamask.io/" target="_blank" rel="noreferrer noopener">Metamask Plugin</a>
+        </div>
+      </div>
+      <hr />
+      <!-- Copyright and social media -->
+      <div class="columns"> 
+        <div class="column copyright">
+          <p>Copyright © 2021 SingularityNET All rights reserved.</p>
+          <p>Stichting SingularityNET Barbara Strozzilaan 362 1083 HN</p>
+          <p>Amsterdam The Netherlands</p>
+        </div>
+        <div class="column social-links" >
+          <a href="https://www.facebook.com/singularityNET.io" target="_blank" rel="noreferrer noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/singularitynet/" target="_blank" rel="noreferrer noopener"> <i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener"> <i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/singularity_net" target="_blank" rel="noreferrer noopener"> <i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com/singularitynet.io" target="_blank" rel="noreferrer noopener"> <i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i class="fab fa-youtube"></i></i></a>          
         </div>
       </div>
     </footer>
+    <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
