@@ -11,14 +11,83 @@
   </head>
 
   <body>
-    <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
+    <!-- HEADER -->
+    <header>
+      <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://singularitynet.io" target="_blank" rel="noreferrer noopener">
+            <img src="./images/snet-logo-white.svg" width="190" height="48">
+          </a>
+          <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu pl-6">
+          <div class="navbar-start">
+            <a class="navbar-item" href="https://beta.singularitynet.io/aimarketplace" target="_blank" rel="noreferrer noopener">
+              Ai Marketplace
+            </a>
+      
+            <a class="navbar-item" href="https://beta.singularitynet.io/getstarted" target="_blank" rel="noreferrer noopener">
+              Get Started
+            </a>
+      
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Products
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a class="navbar-item" href="https://staking.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                  AGIX Staking
+                </a>
+                <a class="navbar-item" href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                  Developer Portal
+                </a>
+                <a class="navbar-item" href="https://publisher.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                  Publisher Portal
+                </a>
+              </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Resources
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a class="navbar-item" href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">
+                  Documentation
+                </a>
+                <a class="navbar-item" href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">
+                  Telegram
+                </a>
+                <a class="navbar-item" href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                  Forum
+                </a>
+                <a class="navbar-item" href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                  Blog
+                </a>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+      </nav>
+    </header>
+    <!-- OLD HEADER -->
+    <!-- <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
           <img src="./images/snet-logo-white.svg" width="190" height="48" />
         </a>
         <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
       </div>
-    </nav>
+    </nav> -->
+    <!-- MAIN SECTION -->
     <section class="section" id="app">
       <!-- <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
@@ -280,8 +349,7 @@
           <section class="modal-card-body">
             <div class="content">
               <p>
-                We do not have any active voting session. We will provide instructions with details of what the vote is
-                on and the mechanism to vote when one becomes active
+                You will see a list of voting proposals. Choose any of them to cast your vote.
               </p>
             </div>
           </section>
@@ -365,19 +433,17 @@
     <!-- FOOTER -->
     <footer class="footer has-text-centered">
       <!-- LOGO With Rightside Links -->
-      <div class="columns logo-block">
-        <div class="column">
-          <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
-        </div>
-        <div class="column logo-links">
-          <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
-          <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White Paper</a>
-          <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
-        </div>
-      </div>
-      <hr />
       <!-- Main Footer Links -->
-      <div class="columns" >
+      <div class="columns common-links" >
+        <div class="column logo-block">
+            <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
+
+
+            <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
+            <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White Paper</a>
+            <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
+
+        </div>
         <div class="column">
           <p>Ai Marketplace</p>
           <a href="https://beta.singularitynet.io/" target="_blank" rel="noreferrer noopener">Free Signup</a>
@@ -402,9 +468,8 @@
           <a href="https://metamask.io/" target="_blank" rel="noreferrer noopener">Metamask Plugin</a>
         </div>
       </div>
-      <hr />
       <!-- Copyright and social media -->
-      <div class="columns"> 
+      <div class="columns copyright-block"> 
         <div class="column copyright">
           <p>Copyright © 2021 SingularityNET All rights reserved.</p>
           <p>Stichting SingularityNET Barbara Strozzilaan 362 1083 HN</p>
