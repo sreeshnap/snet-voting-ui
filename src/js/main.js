@@ -5,6 +5,7 @@ import Web3 from "web3";
 import Eth from "ethjs";
 import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
 
+
 const networks = {
   1: "Mainnet",
   3: "Ropsten",
