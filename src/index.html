@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
   <body>
@@ -159,8 +160,8 @@
                               </div>
                             </div>
                             <div v-if="selectedOption == option.key" class="media-right">
-                              <button class="button is-medium" v-on:click="selectedOption = option.key">
-                                <span class="icon"> ✅ </span>
+                              <button class="button is-medium" v-on:click="selectedOption = option.key" style="background-color: lightgreen">
+                                <span class="material-icons"> task_alt </span>
                                 <span>VOTED</span>
                               </button>
                             </div>
@@ -267,8 +268,11 @@
                   <h3>{{question.heading}}</h3>
                   <div>
                     <p>{{question.text}}</p>
-                  </div>
-                  <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
+                  </div>        
+                   <select v-if="question.question_type == DROP_DOWN">
+                    <option v-for="option in question.options">{{option.text}}</option>                                        
+                  </select>                 
+                  <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px" v-else>
                     <li v-for="option in question.options">
                       <div class="box" style="padding-bottom: 10px; padding-top: 10px">
                         <article class="media">
@@ -289,8 +293,8 @@
                             </button>
                           </div>
                           <div v-else class="media-right">
-                            <button class="button is-medium" v-on:click="onAddOption(question, option)">
-                              <span class="icon"> ✅ </span>
+                            <button class="button is-medium" v-on:click="onAddOption(question, option)" style="background-color: lightgreen;">
+                              <span class="material-icons"> task_alt </span>
                               <span>VOTED</span>
                             </button>
                           </div>
