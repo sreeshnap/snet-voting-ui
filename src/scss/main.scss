@@ -147,3 +147,33 @@ $navbar-item-img-max-height: 3rem;
 .mt-abc {
   margin-top: 200px;
 }
+
+.dropdown-container select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 98%;
+  background-position-y: 50%;
+}
+
+/* for IE10 */
+.dropdown-container select::-ms-expand {
+  display: none;
+}
+.dropdown-container select:focus-visible {
+  outline: none !important;
+  border: 0cm;
+}
+
+.select-option {
+  font-size: inherit;
+  font-weight: bolder;
+}
+.box-border {
+  background-color: #fff;
+  border: 2px solid #eee !important;
+  padding: 1.25rem;
+  border-radius: 6px;
+}
