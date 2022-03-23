@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -30,13 +29,11 @@
 
       <div id="navbarBasicExample" class="navbar-menu pl-6">
         <div class="navbar-start">
-          <a class="navbar-item" href="https://beta.singularitynet.io/aimarketplace" target="_blank"
-            rel="noreferrer noopener">
+            <a class="navbar-item" href="https://beta.singularitynet.io/aimarketplace" target="_blank" rel="noreferrer noopener">
             Ai Marketplace
           </a>
 
-          <a class="navbar-item" href="https://beta.singularitynet.io/getstarted" target="_blank"
-            rel="noreferrer noopener">
+            <a class="navbar-item" href="https://beta.singularitynet.io/getstarted" target="_blank" rel="noreferrer noopener">
             Get Started
           </a>
 
@@ -46,15 +43,13 @@
             </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="https://staking.singularitynet.io/" target="_blank"
-                rel="noreferrer noopener">
+                <a class="navbar-item" href="https://staking.singularitynet.io/" target="_blank" rel="noreferrer noopener">
                 AGIX Staking
               </a>
               <a class="navbar-item" href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">
                 Developer Portal
               </a>
-              <a class="navbar-item" href="https://publisher.singularitynet.io/" target="_blank"
-                rel="noreferrer noopener">
+                <a class="navbar-item" href="https://publisher.singularitynet.io/" target="_blank" rel="noreferrer noopener">
                 Publisher Portal
               </a>
             </div>
@@ -68,12 +63,10 @@
               <a class="navbar-item" href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">
                 Documentation
               </a>
-              <a class="navbar-item" href="https://telegram.me/singularitynet" target="_blank"
-                rel="noreferrer noopener">
+                <a class="navbar-item" href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">
                 Telegram
               </a>
-              <a class="navbar-item" href="https://community.singularitynet.io/" target="_blank"
-                rel="noreferrer noopener">
+                <a class="navbar-item" href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">
                 Forum
               </a>
               <a class="navbar-item" href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">
@@ -129,8 +122,11 @@
       <!-- IF Selected a Proposal -->
       <div v-if="!!selectedProposal">
         <div>
-          <div v-if="message" class="notification"
-            v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
+            <div
+              v-if="message"
+              class="notification"
+              v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
+            >
             {{ message }}
           </div>
 
@@ -197,8 +193,11 @@
                 </div>
                 <h3>Your Vote</h3>
                 <div class="box">
-                  <button class="button" :disabled="signed || !selectedOption || !isMetamaskConnected"
-                    v-on:click="submitVote()">
+                    <button
+                      class="button"
+                      :disabled="signed || !selectedOption || !isMetamaskConnected"
+                      v-on:click="submitVote()"
+                    >
                     <span class="icon"> ✍️ </span>
                     <span>SIGN & CONFIRM</span>
                   </button>
@@ -225,8 +224,12 @@
           <div class="content">
             <h3>Active</h3>
             <ul>
-              <li v-for="activeProposal in proposals.active" :key="activeProposal.question_id" class="card"
-                v-on:click="selectedProposal = activeProposal">
+                <li
+                  v-for="activeProposal in proposals.active"
+                  :key="activeProposal.question_id"
+                  class="card"
+                  v-on:click="selectedProposal = activeProposal"
+                >
                 <div class="card-content">
                   <p>{{activeProposal.question}}</p>
                   <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
@@ -257,7 +260,11 @@
     <div v-if="true"></div>
     <div v-else>
       <div class="container" v-if="isVotingTime">
-        <div v-if="message" class="notification" v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'">
+          <div
+            v-if="message"
+            class="notification"
+            v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
+          >
           {{ message }}
         </div>
         <div class="columns">
@@ -301,8 +308,7 @@
                           </button>
                         </div>
                         <div v-else class="media-right">
-                          <button class="button is-medium" v-on:click="onAddOption(question, option)"
-                            style="background-color: lightgreen;">
+                            <button class="button is-medium" v-on:click="onAddOption(question, option)" style="background-color: lightgreen;">
                             <span class="material-icons"> task_alt </span>
                             <span>VOTED</span>
                           </button>
@@ -314,8 +320,11 @@
               </div>
               <h3>Your Vote</h3>
               <div class="box">
-                <button class="button" :disabled="signed || !selectedCandidates || !isMetamaskConnected"
-                  v-on:click="voteForCandidate(votes)">
+                  <button
+                    class="button"
+                    :disabled="signed || !selectedCandidates || !isMetamaskConnected"
+                    v-on:click="voteForCandidate(votes)"
+                  >
                   <span class="icon"> ✍️ </span>
                   <span>SIGN & CONFIRM</span>
                 </button>
@@ -444,24 +453,21 @@
   <footer class="footer has-text-centered">
     <!-- LOGO With Rightside Links -->
     <!-- Main Footer Links -->
-    <div class="columns common-links">
+      <div class="columns common-links" >
       <div class="column logo-block">
         <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
 
 
         <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
-        <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White
-          Paper</a>
+            <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White Paper</a>
         <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
 
       </div>
       <div class="column">
         <p>Ai Marketplace</p>
         <a href="https://beta.singularitynet.io/" target="_blank" rel="noreferrer noopener">Free Signup</a>
-        <a href="https://dev.singularitynet.io/tutorials/getting-started/" target="_blank" rel="noreferrer noopener">Get
-          Started</a>
-        <a href="https://dev.singularitynet.io/docs/concepts/" target="_blank" rel="noreferrer noopener">Core
-          Concepts</a>
+          <a href="https://dev.singularitynet.io/tutorials/getting-started/" target="_blank" rel="noreferrer noopener">Get Started</a>
+          <a href="https://dev.singularitynet.io/docs/concepts/" target="_blank" rel="noreferrer noopener">Core Concepts</a>
         <a href="https://dev.singularitynet.io/tutorials/" target="_blank" rel="noreferrer noopener">Tutorials</a>
       </div>
       <div class="column">
@@ -488,24 +494,17 @@
         <p>Stichting SingularityNET Barbara Strozzilaan 362 1083 HN</p>
         <p>Amsterdam The Netherlands</p>
       </div>
-      <div class="column social-links">
-        <a href="https://www.facebook.com/singularityNET.io" target="_blank" rel="noreferrer noopener"><i
-            class="fab fa-facebook-f"></i></a>
-        <a href="https://www.linkedin.com/company/singularitynet/" target="_blank" rel="noreferrer noopener"> <i
-            class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener"> <i
-            class="fab fa-github"></i></a>
-        <a href="https://twitter.com/singularity_net" target="_blank" rel="noreferrer noopener"> <i
-            class="fab fa-twitter"></i></a>
-        <a href="https://instagram.com/singularitynet.io" target="_blank" rel="noreferrer noopener"> <i
-            class="fab fa-instagram"></i></a>
-        <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i
-            class="fab fa-youtube"></i></i></a>
+        <div class="column social-links" >
+          <a href="https://www.facebook.com/singularityNET.io" target="_blank" rel="noreferrer noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/singularitynet/" target="_blank" rel="noreferrer noopener"> <i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener"> <i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/singularity_net" target="_blank" rel="noreferrer noopener"> <i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com/singularitynet.io" target="_blank" rel="noreferrer noopener"> <i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i class="fab fa-youtube"></i></i></a>          
       </div>
     </div>
   </footer>
   <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="js/main.js"></script>
 </body>
-
 </html>
