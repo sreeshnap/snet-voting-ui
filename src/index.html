@@ -1,86 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SNET Voting UI</title>
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SNET Voting UI</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
 
-  <body>
-    <!-- HEADER -->
-    <header>
-      <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://singularitynet.io" target="_blank" rel="noreferrer noopener">
-            <img src="./images/snet-logo-white.svg" width="190" height="48">
-          </a>
-          <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu pl-6">
-          <div class="navbar-start">
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://singularitynet.io" target="_blank" rel="noreferrer noopener">
+          <img src="./images/snet-logo-white.svg" width="190" height="48">
+        </a>
+        <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu pl-6">
+        <div class="navbar-start">
             <a class="navbar-item" href="https://beta.singularitynet.io/aimarketplace" target="_blank" rel="noreferrer noopener">
-              Ai Marketplace
-            </a>
-      
+            Ai Marketplace
+          </a>
+
             <a class="navbar-item" href="https://beta.singularitynet.io/getstarted" target="_blank" rel="noreferrer noopener">
-              Get Started
+            Get Started
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Products
             </a>
-      
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                Products
-              </a>
-      
-              <div class="navbar-dropdown">
+
+            <div class="navbar-dropdown">
                 <a class="navbar-item" href="https://staking.singularitynet.io/" target="_blank" rel="noreferrer noopener">
-                  AGIX Staking
-                </a>
-                <a class="navbar-item" href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">
-                  Developer Portal
-                </a>
-                <a class="navbar-item" href="https://publisher.singularitynet.io/" target="_blank" rel="noreferrer noopener">
-                  Publisher Portal
-                </a>
-              </div>
-            </div>
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">
-                Resources
+                AGIX Staking
               </a>
-      
-              <div class="navbar-dropdown">
-                <a class="navbar-item" href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">
-                  Documentation
-                </a>
-                <a class="navbar-item" href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">
-                  Telegram
-                </a>
-                <a class="navbar-item" href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">
-                  Forum
-                </a>
-                <a class="navbar-item" href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">
-                  Blog
-                </a>
-              </div>
+              <a class="navbar-item" href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                Developer Portal
+              </a>
+                <a class="navbar-item" href="https://publisher.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                Publisher Portal
+              </a>
             </div>
           </div>
-      
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Resources
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">
+                Documentation
+              </a>
+                <a class="navbar-item" href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">
+                Telegram
+              </a>
+                <a class="navbar-item" href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                Forum
+              </a>
+              <a class="navbar-item" href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">
+                Blog
+              </a>
+            </div>
+          </div>
         </div>
-      </nav>
-    </header>
-    <!-- OLD HEADER -->
-    <!-- <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
+
+      </div>
+    </nav>
+  </header>
+  <!-- OLD HEADER -->
+  <!-- <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://singularitynet.io/" target="_blank">
           <img src="./images/snet-logo-white.svg" width="190" height="48" />
@@ -88,9 +88,9 @@
         <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
       </div>
     </nav> -->
-    <!-- MAIN SECTION -->
-    <section class="section" id="app">
-      <!-- <div id="navbarBasicExample" class="navbar-menu">
+  <!-- MAIN SECTION -->
+  <section class="section" id="app">
+    <!-- <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
@@ -101,203 +101,91 @@
           </div>
         </div>
       </div> -->
-      <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
-        <div><button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button></div>
-        <div>
-          <div class="buttons">
-            <a class="button is-primary" v-on:click="isShowModal = true">
-              <strong>Instructions</strong>
-            </a>
-          </div>
+    <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+      <div><button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button></div>
+      <div>
+        <div class="buttons">
+          <a class="button is-primary" v-on:click="isShowModal = true">
+            <strong>Instructions</strong>
+          </a>
         </div>
       </div>
+    </div>
 
-      <!-- IF Loading Proposals -->
-      <div v-if="loading.proposals" class="content">
-        <h3>Loading proposals</h3>
-        <progress class="progress is-small is-info" max="100">15%</progress>
-      </div>
-      <!-- IF Proposals loaded -->
-      <div v-else>
-        <!-- IF Selected a Proposal -->
-        <div v-if="!!selectedProposal">
-          <div>
+    <!-- IF Loading Proposals -->
+    <div v-if="loading.proposals" class="content">
+      <h3>Loading proposals</h3>
+      <progress class="progress is-small is-info" max="100">15%</progress>
+    </div>
+    <!-- IF Proposals loaded -->
+    <div v-else>
+      <!-- IF Selected a Proposal -->
+      <div v-if="!!selectedProposal">
+        <div>
             <div
               v-if="message"
               class="notification"
               v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
             >
-              {{ message }}
-            </div>
-
-            <div class="columns">
-              <div class="column is-8-desktop is-offset-2-desktop">
-                <div class="content" v-if="from">
-                  <h3>Your Account</h3>
-                  <p>{{ from }}</p>
-                </div>
-                <div class="content" v-if="alreadyVoted === false">
-                  <h3>Proposal</h3>
-
-                  <div>
-                    <h3>{{selectedProposal.question}}</h3>
-                    <div class="box">
-                      <p>{{selectedProposal.description}}</p>
-                      <a :href="selectedProposal.details_url" target="_blank">Click here to know more</a>
-                    </div>
-                    <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
-                      <li v-for="option in selectedProposal.options">
-                        <div class="box pointer my-1" v-on:click="selectedOption = option.key">
-                          <article class="media">
-                            <!-- <figure class="media-left" v-if="false">
-                            <p class="image is-64x64">
-                              <img :src="option.image" />
-                            </p>
-                          </figure> -->
-                            <div class="media-content">
-                              <div class="content">
-                                <strong>{{option.value}}</strong>
-                              </div>
-                            </div>
-                            <div v-if="selectedOption == option.key" class="media-right">
-                              <button class="button is-medium" v-on:click="selectedOption = option.key" style="background-color: lightgreen">
-                                <span class="material-icons"> task_alt </span>
-                                <span>VOTED</span>
-                              </button>
-                            </div>
-                            <div v-else class="media-right">
-                              <button class="button is-medium" v-on:click="selectedOption = option.key">
-                                <span class="icon"> ⚪️ </span>
-                                <span>VOTE</span>
-                              </button>
-                            </div>
-                          </article>
-                        </div>
-                      </li>
-                    </ol>
-                  </div>
-                  <h3>Your Vote</h3>
-                  <div class="box">
-                    <button
-                      class="button"
-                      :disabled="signed || !selectedOption || !isMetamaskConnected"
-                      v-on:click="submitVote()"
-                    >
-                      <span class="icon"> ✍️ </span>
-                      <span>SIGN & CONFIRM</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="content" v-else>
-                  <h3>You have already voted!</h3>
-                </div>
-              </div>
-              <!-- <div class="column is-2-desktop">
-            <p class="control">
-              <a class="button is-medium is-info" v-on:click="isShowModal = true">
-                <strong class="has-text-weight-semibold">Instructions</strong>
-              </a>
-            </p>
-          </div> -->
-            </div>
-          </div>
-        </div>
-        <!-- IF there is no selected proposal -->
-        <div v-else>
-          <!-- IF Proposals are populated -->
-          <div v-if="!!proposals" class="proposal">
-            <div class="content">
-              <h3>Active</h3>
-              <ul>
-                <li
-                  v-for="activeProposal in proposals.active"
-                  :key="activeProposal.question_id"
-                  class="card"
-                  v-on:click="selectedProposal = activeProposal"
-                >
-                  <div class="card-content">
-                    <p>{{activeProposal.question}}</p>
-                    <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="content" v-if="proposals.inactive && proposals.inactive.length > 0">
-              <h3>Inactive</h3>
-              <ul>
-                <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
-                  <div class="card-content">
-                    <p>{{inactiveProposal.question}}</p>
-                    <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
-                      {{inactiveProposal.details_url}}
-                      </a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- IF Proposals are not populated -->
-          <div v-else>We have no proposals</div>
-        </div>
-      </div>
-
-      <!-- HIDING EVERYTHING BELOW -->
-      <div v-if="true"></div>
-      <div v-else>
-        <div class="container" v-if="isVotingTime">
-          <div
-            v-if="message"
-            class="notification"
-            v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
-          >
             {{ message }}
           </div>
+
           <div class="columns">
             <div class="column is-8-desktop is-offset-2-desktop">
-              <div class="content" v-if="countdownTime">
-                <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
-              </div>
               <div class="content" v-if="from">
                 <h3>Your Account</h3>
                 <p>{{ from }}</p>
               </div>
               <div class="content" v-if="alreadyVoted === false">
-                <h3>{{event.eventName}}</h3>
+                <h3>Proposal</h3>
 
-                <div v-for="question in event.questions" :key="question.ques_id">
-                  <h3>{{question.heading}}</h3>
-                  <div>
-                    <p>{{question.text}}</p>
-                  </div>        
-                   <select v-if="question.question_type == DROP_DOWN">
-                    <option v-for="option in question.options">{{option.text}}</option>                                        
-                  </select>                 
-                  <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px" v-else>
-                    <li v-for="option in question.options">
-                      <div class="box" style="padding-bottom: 10px; padding-top: 10px">
+                <div class="dropdown-container">
+                  <h3>{{selectedProposal.question}}</h3>
+                  <div class="box">
+                    <p>{{selectedProposal.description}}</p>
+                    <a :href="selectedProposal.details_url" target="_blank">Click here to know more</a>
+                  </div>
+
+                  <select v-model="selectedOption" v-if="selectedProposal.question_type === 'DROP_DOWN'"
+                    class="pointer box-border" style="width: 100%; font-size: inherit;font-weight: bolder;line-height: 50px;"
+                    v-bind:style="[selectedOption ? {'background':'#E7FFF8'} : {}]">
+                    <option class="box-border pointer my-1 select-option" disabled value="undefined">
+                      <strong>Please select one</strong>
+                    </option>
+                    <option class="box-border pointer my-1 select-option" v-for="option in selectedProposal.options" :value="option.key">
+                      <strong>{{option.value}}</strong>
+                    </option>
+                  </select>
+
+                  <ol v-else-if="selectedProposal.question_type === 'SINGLE_SELECT'"
+                    style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
+                    <li v-for="option in selectedProposal.options">
+                      <div class="box-border pointer my-1" v-on:click="selectedOption = option.key"
+                        v-bind:style="[selectedOption == option.key ? {'background':'#E7FFF8'} : {}]">
                         <article class="media">
-                          <figure class="media-left" v-if="false">
+                          <!-- <figure class="media-left" v-if="false">
                             <p class="image is-64x64">
                               <img :src="option.image" />
                             </p>
-                          </figure>
+                          </figure> -->
                           <div class="media-content">
                             <div class="content">
-                              <strong>{{option.text}}</strong>
+                              <strong>{{option.value}}</strong>
                             </div>
                           </div>
-                          <div v-if="option.selected === false" class="media-right">
-                            <button class="button is-medium" v-on:click="onAddOption(question, option)">
-                              <span class="icon"> ⚪️ </span>
-                              <span>VOTE</span>
-                            </button>
-                          </div>
-                          <div v-else class="media-right">
-                            <button class="button is-medium" v-on:click="onAddOption(question, option)" style="background-color: lightgreen;">
+                          <div v-if="selectedOption == option.key" class="media-right">
+                            <button class="button is-medium" v-on:click="selectedOption = option.key"
+                              style="background-color: #E7FFF8; border: 0cm;">
                               <span class="material-icons"> task_alt </span>
                               <span>VOTED</span>
                             </button>
                           </div>
+                          <!-- <div v-else class="media-right">
+                            <button class="button is-medium" v-on:click="selectedOption = option.key">
+                              <span class="icon"> ⚪️ </span>
+                              <span>VOTE</span>
+                            </button>
+                          </div> -->
                         </article>
                       </div>
                     </li>
@@ -305,11 +193,11 @@
                 </div>
                 <h3>Your Vote</h3>
                 <div class="box">
-                  <button
-                    class="button"
-                    :disabled="signed || !selectedCandidates || !isMetamaskConnected"
-                    v-on:click="voteForCandidate(votes)"
-                  >
+                    <button
+                      class="button"
+                      :disabled="signed || !selectedOption || !isMetamaskConnected"
+                      v-on:click="submitVote()"
+                    >
                     <span class="icon"> ✍️ </span>
                     <span>SIGN & CONFIRM</span>
                   </button>
@@ -328,36 +216,163 @@
           </div> -->
           </div>
         </div>
-        <div class="container has-text-centered" v-else>
+      </div>
+      <!-- IF there is no selected proposal -->
+      <div v-else>
+        <!-- IF Proposals are populated -->
+        <div v-if="!!proposals" class="proposal">
           <div class="content">
-            <h1 class="title">We do not have any active vote now</h1>
-            <p class="subtitle">
-              <!-- Add detailed message here -->
-            </p>
-            <br />
-            <a class="button is-medium is-info" v-on:click="isShowModal = true">
-              <strong class="has-text-weight-semibold">Instructions</strong>
-            </a>
+            <h3>Active</h3>
+            <ul>
+                <li
+                  v-for="activeProposal in proposals.active"
+                  :key="activeProposal.question_id"
+                  class="card"
+                  v-on:click="selectedProposal = activeProposal"
+                >
+                <div class="card-content">
+                  <p>{{activeProposal.question}}</p>
+                  <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="content" v-if="proposals.inactive && proposals.inactive.length > 0">
+            <h3>Inactive</h3>
+            <ul>
+              <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
+                <div class="card-content">
+                  <p>{{inactiveProposal.question}}</p>
+                  <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
+                  {{inactiveProposal.details_url}}
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
+        <!-- IF Proposals are not populated -->
+        <div v-else>We have no proposals</div>
       </div>
-      <!-- HIDDEN TILL HERE -->
+    </div>
 
-      <div class="modal" v-bind:class="{ 'is-active': isShowModal }">
-        <div class="modal-background" v-on:click="isShowModal = false"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Voting Instructions</p>
-            <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
-          </header>
-          <section class="modal-card-body">
-            <div class="content">
-              <p>
-                You will see a list of voting proposals. Choose any of them to cast your vote.
-              </p>
+    <!-- HIDING EVERYTHING BELOW -->
+    <div v-if="true"></div>
+    <div v-else>
+      <div class="container" v-if="isVotingTime">
+          <div
+            v-if="message"
+            class="notification"
+            v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
+          >
+          {{ message }}
+        </div>
+        <div class="columns">
+          <div class="column is-8-desktop is-offset-2-desktop">
+            <div class="content" v-if="countdownTime">
+              <span>Voting will end in</span> <span class="tag is-success is-large">{{ countdownTime }}</span>
             </div>
-          </section>
-          <!-- <section class="modal-card-body">
+            <div class="content" v-if="from">
+              <h3>Your Account</h3>
+              <p>{{ from }}</p>
+            </div>
+            <div class="content" v-if="alreadyVoted === false">
+              <h3>{{event.eventName}}</h3>
+
+              <div v-for="question in event.questions" :key="question.ques_id">
+                <h3>{{question.heading}}</h3>
+                <div>
+                  <p>{{question.text}}</p>
+                </div>
+                <select v-if="question.question_type == DROP_DOWN">
+                  <option v-for="option in question.options">{{option.text}}</option>
+                </select>
+                <ol style="list-style-type: none; margin-left: 0px; margin-bottom: 25px" v-else>
+                  <li v-for="option in question.options">
+                    <div class="box" style="padding-bottom: 10px; padding-top: 10px">
+                      <article class="media">
+                        <figure class="media-left" v-if="false">
+                          <p class="image is-64x64">
+                            <img :src="option.image" />
+                          </p>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content">
+                            <strong>{{option.text}}</strong>
+                          </div>
+                        </div>
+                        <div v-if="option.selected === false" class="media-right">
+                          <button class="button is-medium" v-on:click="onAddOption(question, option)">
+                            <span class="icon"> ⚪️ </span>
+                            <span>VOTE</span>
+                          </button>
+                        </div>
+                        <div v-else class="media-right">
+                            <button class="button is-medium" v-on:click="onAddOption(question, option)" style="background-color: lightgreen;">
+                            <span class="material-icons"> task_alt </span>
+                            <span>VOTED</span>
+                          </button>
+                        </div>
+                      </article>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+              <h3>Your Vote</h3>
+              <div class="box">
+                  <button
+                    class="button"
+                    :disabled="signed || !selectedCandidates || !isMetamaskConnected"
+                    v-on:click="voteForCandidate(votes)"
+                  >
+                  <span class="icon"> ✍️ </span>
+                  <span>SIGN & CONFIRM</span>
+                </button>
+              </div>
+            </div>
+            <div class="content" v-else>
+              <h3>You have already voted!</h3>
+            </div>
+          </div>
+          <!-- <div class="column is-2-desktop">
+            <p class="control">
+              <a class="button is-medium is-info" v-on:click="isShowModal = true">
+                <strong class="has-text-weight-semibold">Instructions</strong>
+              </a>
+            </p>
+          </div> -->
+        </div>
+      </div>
+      <div class="container has-text-centered" v-else>
+        <div class="content">
+          <h1 class="title">We do not have any active vote now</h1>
+          <p class="subtitle">
+            <!-- Add detailed message here -->
+          </p>
+          <br />
+          <a class="button is-medium is-info" v-on:click="isShowModal = true">
+            <strong class="has-text-weight-semibold">Instructions</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- HIDDEN TILL HERE -->
+
+    <div class="modal" v-bind:class="{ 'is-active': isShowModal }">
+      <div class="modal-background" v-on:click="isShowModal = false"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Voting Instructions</p>
+          <button class="delete" aria-label="close" v-on:click="isShowModal = false"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="content">
+            <p>
+              You will see a list of voting proposals. Choose any of them to cast your vote.
+            </p>
+          </div>
+        </section>
+        <!-- <section class="modal-card-body">
           <div class="content">
             <p>
               The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal. 
@@ -417,68 +432,68 @@
             </ol>
           </div>
         </section> -->
-          <div class="modal-card-foot">
-            <button class="button" v-on:click="isShowModal = false">Cancel</button>
-          </div>
+        <div class="modal-card-foot">
+          <button class="button" v-on:click="isShowModal = false">Cancel</button>
         </div>
       </div>
-      <div class="modal" v-bind:class="{ 'is-active': loading.submitVote }">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Recording your vote...</p>
-          </header>
-          <section class="modal-card-body">
-            <progress class="progress is-small is-info" max="100">15%</progress>
-          </section>
-        </div>
+    </div>
+    <div class="modal" v-bind:class="{ 'is-active': loading.submitVote }">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Recording your vote...</p>
+        </header>
+        <section class="modal-card-body">
+          <progress class="progress is-small is-info" max="100">15%</progress>
+        </section>
       </div>
-    </section>
-    <!-- FOOTER -->
-    <footer class="footer has-text-centered">
-      <!-- LOGO With Rightside Links -->
-      <!-- Main Footer Links -->
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer has-text-centered">
+    <!-- LOGO With Rightside Links -->
+    <!-- Main Footer Links -->
       <div class="columns common-links" >
-        <div class="column logo-block">
-            <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
+      <div class="column logo-block">
+        <img src="./images/WhiteLogo.svg" width="240" height="60.5" />
 
 
-            <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
+        <a href="https://singularitynet.io/studio/" target="_blank" rel="noreferrer noopener">Singularity Studio</a>
             <a href="https://public.singularitynet.io/whitepaper.pdf" target="_blank" rel="noreferrer noopener">White Paper</a>
-            <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
+        <a href="https://singularitynet.io/jobs-temp/" target="_blank" rel="noreferrer noopener">Jobs</a>
 
-        </div>
-        <div class="column">
-          <p>Ai Marketplace</p>
-          <a href="https://beta.singularitynet.io/" target="_blank" rel="noreferrer noopener">Free Signup</a>
+      </div>
+      <div class="column">
+        <p>Ai Marketplace</p>
+        <a href="https://beta.singularitynet.io/" target="_blank" rel="noreferrer noopener">Free Signup</a>
           <a href="https://dev.singularitynet.io/tutorials/getting-started/" target="_blank" rel="noreferrer noopener">Get Started</a>
           <a href="https://dev.singularitynet.io/docs/concepts/" target="_blank" rel="noreferrer noopener">Core Concepts</a>
-          <a href="https://dev.singularitynet.io/tutorials/" target="_blank" rel="noreferrer noopener">Tutorials</a>
-        </div>
-        <div class="column">
-          <p>Ai Marketplace</p>
-          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Documentation</a>
-          <a href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">Telegram</a>
-          <a href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">Forum</a>
-          <a href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">Blog</a>
-        </div>
-        <div class="column">
-          <p>Ai Marketplace</p>
-          <a href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">Developer Portal</a>
-          <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Github</a>
-        </div>
-        <div class="column">
-          <p>Ai Marketplace</p>
-          <a href="https://metamask.io/" target="_blank" rel="noreferrer noopener">Metamask Plugin</a>
-        </div>
+        <a href="https://dev.singularitynet.io/tutorials/" target="_blank" rel="noreferrer noopener">Tutorials</a>
       </div>
-      <!-- Copyright and social media -->
-      <div class="columns copyright-block"> 
-        <div class="column copyright">
-          <p>Copyright © 2021 SingularityNET All rights reserved.</p>
-          <p>Stichting SingularityNET Barbara Strozzilaan 362 1083 HN</p>
-          <p>Amsterdam The Netherlands</p>
-        </div>
+      <div class="column">
+        <p>Ai Marketplace</p>
+        <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Documentation</a>
+        <a href="https://telegram.me/singularitynet" target="_blank" rel="noreferrer noopener">Telegram</a>
+        <a href="https://community.singularitynet.io/" target="_blank" rel="noreferrer noopener">Forum</a>
+        <a href="http://blog.singularitynet.io/" target="_blank" rel="noreferrer noopener">Blog</a>
+      </div>
+      <div class="column">
+        <p>Ai Marketplace</p>
+        <a href="https://dev.singularitynet.io/" target="_blank" rel="noreferrer noopener">Developer Portal</a>
+        <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener">Github</a>
+      </div>
+      <div class="column">
+        <p>Ai Marketplace</p>
+        <a href="https://metamask.io/" target="_blank" rel="noreferrer noopener">Metamask Plugin</a>
+      </div>
+    </div>
+    <!-- Copyright and social media -->
+    <div class="columns copyright-block">
+      <div class="column copyright">
+        <p>Copyright © 2021 SingularityNET All rights reserved.</p>
+        <p>Stichting SingularityNET Barbara Strozzilaan 362 1083 HN</p>
+        <p>Amsterdam The Netherlands</p>
+      </div>
         <div class="column social-links" >
           <a href="https://www.facebook.com/singularityNET.io" target="_blank" rel="noreferrer noopener"><i class="fab fa-facebook-f"></i></a>
           <a href="https://www.linkedin.com/company/singularitynet/" target="_blank" rel="noreferrer noopener"> <i class="fab fa-linkedin-in"></i></a>
@@ -486,10 +501,10 @@
           <a href="https://twitter.com/singularity_net" target="_blank" rel="noreferrer noopener"> <i class="fab fa-twitter"></i></a>
           <a href="https://instagram.com/singularitynet.io" target="_blank" rel="noreferrer noopener"> <i class="fab fa-instagram"></i></a>
           <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i class="fab fa-youtube"></i></i></a>          
-        </div>
       </div>
-    </footer>
-    <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-  </body>
+    </div>
+  </footer>
+  <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
 </html>
