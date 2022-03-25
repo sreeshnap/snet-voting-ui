@@ -168,6 +168,7 @@ function handleAccountsChanged(that) {
   window.ethereum.on("accountsChanged", function (accounts) {
     that.from = accounts[0];
     getProposals(that, accounts[0]);
+    window.location.reload();
     return;
   });
 }
