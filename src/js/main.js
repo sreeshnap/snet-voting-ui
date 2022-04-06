@@ -168,6 +168,7 @@ function handleAccountsChanged(that) {
   window.ethereum.on("accountsChanged", function (accounts) {
     that.from = accounts[0];
     getProposals(that, accounts[0]);
+    window.location.reload();
     return;
   });
 }
@@ -182,6 +183,17 @@ function startCountdownTimer(that) {
     const hoursIncludingDays = parseInt(hours) + parseInt(days) * 24;
     that.countdownTime = `${hoursIncludingDays} Hr -  ${minutes} Min  - ${seconds} Sec`;
   }, 1000);
+}
+function selectionOptionChange(activeProposal) {
+  this.selectedProposal = activeProposal;
+  setTimeout(() => {
+    if (this.selectedProposal.question_type === "DROP_DOWN")
+      if (this.selectedProposal.user_response_key){
+        document.getElementById("dropdown").disabled = true;
+        this.selectedOption = this.selectedProposal.user_response_key
+      }
+      else document.getElementById("dropdown").disabled = false;
+  }, 500);
 }
 
 async function mounted() {
@@ -248,6 +260,7 @@ new Vue({
     closeSelectedProposal() {
       closeSelectedProposal(this);
     },
+    selectionOptionChange,
     // onAddOption,
   },
   computed: { isVotingTime },
