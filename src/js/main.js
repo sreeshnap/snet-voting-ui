@@ -184,6 +184,17 @@ function startCountdownTimer(that) {
     that.countdownTime = `${hoursIncludingDays} Hr -  ${minutes} Min  - ${seconds} Sec`;
   }, 1000);
 }
+function selectionOptionChange(activeProposal) {
+  this.selectedProposal = activeProposal;
+  setTimeout(() => {
+    if (this.selectedProposal.question_type === "DROP_DOWN")
+      if (this.selectedProposal.user_response_key){
+        document.getElementById("dropdown").disabled = true;
+        this.selectedOption = this.selectedProposal.user_response_key
+      }
+      else document.getElementById("dropdown").disabled = false;
+  }, 500);
+}
 
 async function mounted() {
   getProposals(this);
@@ -249,6 +260,7 @@ new Vue({
     closeSelectedProposal() {
       closeSelectedProposal(this);
     },
+    selectionOptionChange,
     // onAddOption,
   },
   computed: { isVotingTime },

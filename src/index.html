@@ -101,6 +101,9 @@
           </div>
         </div>
       </div> -->
+    <div v-if="!isMetamaskConnected" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+      <strong class="error-message">Please connect to wallet for voting</strong>
+    </div>
     <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
       <div><button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button></div>
       <div>
@@ -146,9 +149,9 @@
                     <a :href="selectedProposal.details_url" target="_blank">Click here to know more</a>
                   </div>
 
-                  <select v-model="selectedOption" v-if="selectedProposal.question_type === 'DROP_DOWN'"
+                  <select v-model="selectedOption" id="dropdown" v-if="selectedProposal.question_type === 'DROP_DOWN'"
                     class="pointer box-border" style="width: 100%; font-size: inherit;font-weight: bolder;line-height: 50px;"
-                    v-bind:style="[selectedOption ? {'background':'#E7FFF8'} : {}]">
+                    v-bind:style="[selectedOption || selectedProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                     <option class="box-border pointer my-1 select-option" disabled value="undefined">
                       <strong>Please select one</strong>
                     </option>
@@ -160,8 +163,9 @@
                   <ol v-else-if="selectedProposal.question_type === 'SINGLE_SELECT'"
                     style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
                     <li v-for="option in selectedProposal.options">
-                      <div class="box-border pointer my-1" v-on:click="selectedOption = option.key"
-                        v-bind:style="[selectedOption == option.key ? {'background':'#E7FFF8'} : {}]">
+                      <div class="box-border pointer my-1" 
+                        v-on:click="selectedProposal.user_response_key ? '' : selectedOption = option.key"
+                        v-bind:style="[selectedOption == option.key || option.key == selectedProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                         <article class="media">
                           <!-- <figure class="media-left" v-if="false">
                             <p class="image is-64x64">
@@ -173,8 +177,8 @@
                               <strong>{{option.value}}</strong>
                             </div>
                           </div>
-                          <div v-if="selectedOption == option.key" class="media-right">
-                            <button class="button is-medium" v-on:click="selectedOption = option.key"
+                          <div v-if="selectedOption == option.key || option.key == selectedProposal.user_response_key" class="media-right">
+                            <button class="button is-medium" v-on:click="selectedProposal.user_response_key ? '' :selectedOption = option.key"
                               style="background-color: #E7FFF8; border: 0cm;">
                               <span class="material-icons"> task_alt </span>
                               <span>VOTED</span>
@@ -195,7 +199,7 @@
                 <div class="box">
                     <button
                       class="button"
-                      :disabled="signed || !selectedOption || !isMetamaskConnected"
+                      :disabled="signed || !selectedOption || !isMetamaskConnected || !!selectedProposal.user_response_key"
                       v-on:click="submitVote()"
                     >
                     <span class="icon"> ✍️ </span>
@@ -228,11 +232,17 @@
                   v-for="activeProposal in proposals.active"
                   :key="activeProposal.question_id"
                   class="card"
-                  v-on:click="selectedProposal = activeProposal"
+                  v-on:click="activeProposal.user_response_key ? selectionOptionChange(activeProposal) :selectedProposal = activeProposal"
                 >
-                <div class="card-content">
-                  <p>{{activeProposal.question}}</p>
-                  <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
+                <div class="card-content is-flex is-justify-content-space-between is-align-items-center" v-bind:style="[activeProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
+                  <div>
+                    <p>{{activeProposal.question}}</p>
+                    <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
+                  </div>  
+                  <div v-if="activeProposal.user_response_key" class="media-right is-flex is-justify-content-space-between is-align-items-center">
+                      <span class="material-icons"> task_alt </span>
+                      <span>VOTED</span>
+                  </div>
                 </div>
               </li>
             </ul>
