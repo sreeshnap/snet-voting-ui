@@ -101,7 +101,7 @@
           </div>
         </div>
       </div> -->
-    <div v-if="!isMetamaskConnected" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+    <div v-if="!isMetamaskConnected && !loading.proposals" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
       <strong class="error-message">Please connect to wallet for voting</strong>
     </div>
     <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
