@@ -103,6 +103,11 @@ function submitVote() {
         return notification(this, "error", response.error.message);
       }
       this.loading.submitVote = false;
+      this.proposals.active.map(item => {
+        if(item.question_id === this.selectedProposal.question_id){
+          item.user_response_key = this.selectedOption;
+        }
+      })
       return notification(this, "success", "Your vote has been recorded successfully!");
     })
     .catch((error) => {
