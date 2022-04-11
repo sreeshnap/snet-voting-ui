@@ -13,12 +13,11 @@
 
 <body>
   <!-- HEADER -->
+  <div id="app">
   <header>
     <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://singularitynet.io" target="_blank" rel="noreferrer noopener">
-          <img src="./images/snet-logo-white.svg" width="190" height="48">
-        </a>
+        <button class="navbar-item btn-transparent" v-on:click="closeSelectedProposal()"> <img src="./images/snet-logo-white.svg" width="190" height="48"></button>
         <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
@@ -89,7 +88,7 @@
       </div>
     </nav> -->
   <!-- MAIN SECTION -->
-  <section class="section" id="app">
+  <section class="section">
     <!-- <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
@@ -514,6 +513,7 @@
       </div>
     </div>
   </footer>
+</div>
   <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="js/main.js"></script>
 </body>
