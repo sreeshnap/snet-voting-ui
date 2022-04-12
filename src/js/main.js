@@ -145,6 +145,11 @@ function notification(ctx, type, message) {
 }
 
 async function beforeMount() {
+  history.pushState(null, null, null);
+  window.addEventListener('popstate', function () {
+    history.pushState(null, null, null);
+    window.location.reload()  
+  });
   if (window.ethereum) {
     console.log("Modern dapp browsers...");
     try {
