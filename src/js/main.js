@@ -87,8 +87,8 @@ function submitVote() {
 
   this.from = from;
   console.log("message to sign", msg.string);
-  window.web3.eth.personal
-    .sign(msg.string, from)
+  const signer = this.web3Modal.library.getSigner();
+  signer.signMessage(msg.string)
     .then((signed) => {
       this.signed = signed;
       return {
