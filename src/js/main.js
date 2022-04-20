@@ -1,12 +1,9 @@
 import Vue from "vue";
 import VueResource from "vue-resource";
-import Web3 from "web3";
 import Web3ModalVue from "web3modal-vue";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import {web3Modal} from "../config/mixins";
 import store from '../store'
-
-import Eth from "ethjs";
 import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
 
 
@@ -29,21 +26,6 @@ function formattedDateComponentsNumber(number) {
   return ("0" + number).slice(-2);
 }
 
-// function onAddOption(question, answer) {
-//   let qstn = this.event.questions.find((quest) => quest.ques_id === question.ques_id);
-
-//   const options = qstn.options.map((option) => {
-//     if (option.text === answer.text) {
-//       option.selected = true;
-//     } else {
-//       option.selected = false;
-//     }
-//     return option;
-//   });
-//   qstn.options = options;
-//   this.selectedCandidates = true;
-// }
-
 function getTimeRemaining(endTime) {
   const endtimeEpoch = parseInt(endTime);
   var deadline = new Date(endtimeEpoch * 1000);
@@ -61,16 +43,9 @@ function getTimeRemaining(endTime) {
   };
 }
 
-function getChainId() {
-  let chainIdHex =  window.ethereum.chainId;
-  let chainId = parseInt(chainIdHex, 16);
-  return chainId;
-}
-
 function submitVote() {
   this.loading.submitVote = true;
   let chainId = this.web3Modal.chainId;
-  console.log("===submitvote===",chainId)
   if (`${chainId}` !== process.env.CHAIN_ID) {
     let allowedNetwork = networks[process.env.CHAIN_ID];
     this.loading.submitVote = false;
@@ -125,21 +100,6 @@ function submitVote() {
     });
 }
 
-function toHex(str) {
-  var result = "";
-  for (var i = 0; i < str.length; i++) {
-    result += str.charCodeAt(i).toString(16);
-  }
-  return result;
-}
-
-function toPaddedHex(string, bit = 32) {
-  const hex = toHex(string);
-  const hexLength = hex.length;
-  const paddedHex = window.web3.utils.padRight(hex, bit * (Math.floor(hexLength / bit) + 1));
-  return paddedHex;
-}
-
 function notification(ctx, type, message) {
   setTimeout(function () {
     ctx.message = undefined;
@@ -155,41 +115,6 @@ async function beforeMount() {
     history.pushState(null, null, null);
     window.location.reload()  
   });
-  
-  // if (window.ethereum) {
-  //   console.log("Modern dapp browsers...");
-  //   try {
-  //     // Request account access if needed
-  //     await ethereum.request({ method: "eth_requestAccounts" });
-  //     // Acccounts now exposed
-  //     window.ethjs = new Eth(window.web3.currentProvider);
-  //     window.web3 = new Web3(window.web3.currentProvider);
-  //   } catch (error) {
-  //     // User denied account access...
-  //     console.log("User denied account access...!");
-  //   }
-  // } else if (window.web3) {
-  //   console.log("Legacy dapp browsers...");
-  //   window.web3 = new Web3(window.web3.currentProvider);
-  //   // Acccounts always exposed
-  //   provider = window.web3.currentProvider;
-  //   window.ethjs = new Eth(window.web3.currentProvider);
-  // } else {
-  //   // Non-dapp browsers...
-  //   console.log("Non-Ethereum browser detected. You should consider trying MetaMask!");
-  // }
-}
-
-function handleAccountsChanged(that) {
-  window.ethereum.on("accountsChanged", function (accounts) {
-    that.from = accounts[0];
-    getProposals(that, accounts[0]);
-    window.location.reload();
-    return;
-  });
-}
-function handleNetworkChanged() {
-  window.ethereum.on("chainChanged", (_chainId) => window.location.reload());
 }
 
 function startCountdownTimer(that) {
@@ -215,8 +140,6 @@ function selectionOptionChange(activeProposal) {
 async function mounted() {
   this.$nextTick(async () => {
     const web3modal = this.$refs.web3modal;
-   
-    console.log("=====cachedProvider====",web3modal.cachedProvider)
     this.$store.commit('setWeb3Modal', web3modal)
     if (web3modal.cachedProvider) {
       this.connect()
@@ -226,7 +149,6 @@ async function mounted() {
   startCountdownTimer(this);
 
   setTimeout(() => {
-    console.log("=======this.$store=====", this.web3Modal.account)
     const from = this.web3Modal.account;
     if(!from){
       return notification(this, "error", "Connect or Unlock Metamask and reload the page");
@@ -234,7 +156,6 @@ async function mounted() {
 
     getProposals(this, from);
     let chainId = this.web3Modal.chainId;
-    console.log("========chainId===",chainId)
     if (`${chainId}` !== process.env.CHAIN_ID) {
       let allowedNetwork = networks[process.env.CHAIN_ID];
       return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
@@ -242,27 +163,6 @@ async function mounted() {
     this.from = from;
 
   }, 1000);
-  // if (!window.ethereum) {
-  //   return notification(this, "error", "Connect or Unlock Metamask and reload the page");
-  // }
-
-  // const accounts = await ethereum.request({ method: "eth_accounts" });
-  // const from = accounts[0];
-
-  // if (!from) {
-  //   return notification(this, "error", "Connect or Unlock Metamask and reload the page");
-  // }
-  // getProposals(this, from);
-  // let chainId = getChainId();
-  // if (`${chainId}` !== process.env.CHAIN_ID) {
-  //   let allowedNetwork = networks[process.env.CHAIN_ID];
-  //   return notification(this, "error", `Please switch to ${allowedNetwork} network.`);
-  // }
-  // this.isMetamaskConnected = true;
-  // handleAccountsChanged(this);
-  // handleNetworkChanged();
-  // this.from = from;
- 
 }
 
 function isVotingTime() {
