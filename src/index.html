@@ -73,6 +73,8 @@
               </a>
             </div>
           </div>
+          <button v-if="web3Modal.active" >Connected</button>
+          <button v-else v-on:click="connect()">Connect Wallet</button>
         </div>
 
       </div>
@@ -100,7 +102,7 @@
           </div>
         </div>
       </div> -->
-    <div v-if="!isMetamaskConnected && !loading.proposals" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+    <div v-if="!web3Modal.active" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
       <strong class="error-message">Please connect to wallet for voting</strong>
     </div>
     <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
@@ -198,7 +200,7 @@
                 <div class="box">
                     <button
                       class="button"
-                      :disabled="signed || !selectedOption || !isMetamaskConnected || !!selectedProposal.user_response_key"
+                      :disabled="signed || !selectedOption || !web3Modal.active || !!selectedProposal.user_response_key"
                       v-on:click="submitVote()"
                     >
                     <span class="icon"> ✍️ </span>
@@ -331,7 +333,7 @@
               <div class="box">
                   <button
                     class="button"
-                    :disabled="signed || !selectedCandidates || !isMetamaskConnected"
+                    :disabled="signed || !selectedCandidates || !web3Modal.active"
                     v-on:click="voteForCandidate(votes)"
                   >
                   <span class="icon"> ✍️ </span>
@@ -457,6 +459,12 @@
         </section>
       </div>
     </div>
+    <web3-modal-vue
+    ref="web3modal"
+    :theme="theme"
+    :provider-options="providerOptions"
+    cache-provider
+    />
   </section>
   <!-- FOOTER -->
   <footer class="footer has-text-centered">
@@ -513,7 +521,7 @@
       </div>
     </div>
   </footer>
-</div>
+  </div>
   <script src="https://kit.fontawesome.com/8311194511.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="js/main.js"></script>
 </body>

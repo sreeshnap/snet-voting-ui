@@ -9,6 +9,7 @@
     "push-dir": "^0.4.1",
     "sass": "^1.17.3",
     "vue": "^2.6.10",
+    "vue-hot-reload-api": "2.x",
     "vue-resource": "^1.5.1",
     "web3": "1.3.0"
   },
@@ -35,7 +36,11 @@
     "deploy": "npx cpx CNAME dist && npx push-dir --dir=dist --branch=gh-pages"
   },
   "dependencies": {
+    "@walletconnect/web3-provider": "^1.7.7",
     "axios": "^0.24.0",
-    "bulma": "^0.9.3"
+    "bulma": "^0.9.3",
+    "ethers": "^5.6.4",
+    "vuex": "^3.4.0",
+    "web3modal-vue": "^1.0.5"
   }
 }
