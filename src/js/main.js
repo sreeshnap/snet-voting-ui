@@ -208,9 +208,9 @@ new Vue({
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: "-"
-          }
-        }
+          infuraId: process.env.INFURA_KEY,
+        },
+      },
       },
     number: 0,
     balance: 0
