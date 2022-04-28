@@ -49,6 +49,7 @@ const web3ModalStore = {
       provider.on("connect", async (info) => {
         let chainId = parseInt(info.chainId);
         commit("setChainId", chainId);
+        window.location.reload();
         console.log("connect====", info);
       });
 
@@ -60,11 +61,13 @@ const web3ModalStore = {
           await dispatch("resetApp");
         }
         console.log("accountsChanged");
+        window.location.reload();
       });
       provider.on("chainChanged", async (chainId) => {
         chainId = parseInt(chainId);
         commit("setChainId", chainId);
         console.log("chainChanged", chainId);
+        window.location.reload();
       });
     },
     async resetApp({ state, commit }) {

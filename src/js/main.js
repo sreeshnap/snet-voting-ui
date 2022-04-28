@@ -216,8 +216,10 @@ new Vue({
     balance: 0
   },
   methods: {
-    connect() {
-      this.$store.dispatch('connect')
+    async connect() {
+      await this.$store.dispatch("connect");
+      if (this.web3Modal.account) getProposals(this, this.web3Modal.account);
+    },
     },
     submitVote,
     closeSelectedProposal() {
