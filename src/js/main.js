@@ -103,7 +103,7 @@ function submitVote() {
 function notification(ctx, type, message) {
   setTimeout(function () {
     ctx.message = undefined;
-  }, 2000);
+  }, 10000);
   ctx.message = message;
   ctx.messageType = type;
   scrollToTop();
