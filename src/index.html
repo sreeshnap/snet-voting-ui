@@ -73,8 +73,12 @@
               </a>
             </div>
           </div>
-          <button v-if="web3Modal.active" >Connected</button>
-          <button v-else v-on:click="connect()">Connect Wallet</button>
+          <div  v-if="web3Modal.active" class="navbar-item">
+            <button class="header-disconnect-button" v-on:click="disconnect()">Disconnect Wallet</button>
+          </div>
+          <div v-else class="navbar-item ">
+            <button class="header-button"  v-on:click="connect()">Connect Wallet</button>
+          </div>
         </div>
 
       </div>
@@ -238,7 +242,7 @@
                 <div class="card-content is-flex is-justify-content-space-between is-align-items-center" v-bind:style="[activeProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                   <div>
                     <p>{{activeProposal.question}}</p>
-                    <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a>
+                    <!-- <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a> -->
                   </div>  
                   <div v-if="activeProposal.user_response_key" class="media-right is-flex is-justify-content-space-between is-align-items-center">
                       <span class="material-icons"> task_alt </span>
@@ -254,9 +258,9 @@
               <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
                 <div class="card-content">
                   <p>{{inactiveProposal.question}}</p>
-                  <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
+                  <!-- <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
                   {{inactiveProposal.details_url}}
-                  </a>
+                  </a> -->
                 </div>
               </li>
             </ul>

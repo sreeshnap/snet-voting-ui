@@ -52,7 +52,7 @@ $info: $purple-light;
 $navbar-height: 4.375rem;
 $navbar-item-img-max-height: 3rem;
 
-@import "../../node_modules/bulma/bulma";
+@import "../../node_modules/bulma/bulma.sass";
 
 .proposal {
   .card {
@@ -192,3 +192,18 @@ $navbar-item-img-max-height: 3rem;
 }
 
 .web3modal-modal-lightbox { z-index: 99 !important; }
+
+.header-button{
+  background-color: transparent;
+  color: white;
+  font-size: inherit;
+  border: 2px solid #eee;
+  padding: 10px;
+}
+.header-disconnect-button{
+  background-color: transparent;
+  color: #ed4337;
+  font-size: inherit;
+  border: 2px solid #ed4337;
+  padding: 10px;
+}
