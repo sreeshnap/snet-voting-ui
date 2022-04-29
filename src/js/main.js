@@ -101,12 +101,18 @@ function submitVote() {
 }
 
 function notification(ctx, type, message) {
-  setTimeout(function () {
-    ctx.message = undefined;
-  }, 10000);
+  document.body.addEventListener("click", away(ctx), true);
   ctx.message = message;
   ctx.messageType = type;
   scrollToTop();
+}
+
+function away(ctx) {
+  const handler = () => {
+    ctx.message = undefined;
+    document.body.removeEventListener("click", handler);
+  };
+  return handler;
 }
 
 async function beforeMount() {
@@ -220,6 +226,10 @@ new Vue({
       await this.$store.dispatch("connect");
       if (this.web3Modal.account) getProposals(this, this.web3Modal.account);
     },
+
+    async disconnect() {
+      await this.$store.dispatch("resetApp");
+      getProposals(this);
     },
     submitVote,
     closeSelectedProposal() {
