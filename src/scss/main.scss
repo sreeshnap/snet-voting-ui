@@ -51,6 +51,12 @@ $info: $purple-light;
 // Navigation Bar
 $navbar-height: 4.375rem;
 $navbar-item-img-max-height: 3rem;
+$navbar-background-color: url("../images/header.png") center center;
+$navbar-item-color: #ffffff;
+$navbar-dropdown-item-hover-color: #ffffff;
+$navbar-item-active-color:$purple-dark;
+$navbar-dropdown-background-color: url("../images/header.png") center center;
+$navbar-dropdown-item-hover-background-color: $purple-dark;
 
 @import "../../node_modules/bulma/bulma.sass";
 
@@ -63,6 +69,10 @@ $navbar-item-img-max-height: 3rem;
     list-style: none;
     margin: 0;
   }
+}
+
+.navbar-dropdown{
+  background-color:  $purple-dark !important;
 }
 
 .pointer {

@@ -15,7 +15,7 @@
   <!-- HEADER -->
   <div id="app">
   <header>
-    <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
+     <nav class="navbar is-primary px-5" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <button class="navbar-item btn-transparent" v-on:click="closeSelectedProposal()"> <img src="./images/snet-logo-white.svg" width="190" height="48"></button>
         <span style="line-height: 4.375rem; font-size: 1.45rem; font-weight: bold">VOTING</span>
@@ -26,7 +26,7 @@
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu pl-6">
+      <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="https://beta.singularitynet.io/aimarketplace" target="_blank" rel="noreferrer noopener">
             Ai Marketplace
@@ -72,7 +72,7 @@
                 Blog
               </a>
             </div>
-          </div>
+          </div>          
           <div  v-if="web3Modal.active" class="navbar-item">
             <button class="header-disconnect-button" v-on:click="disconnect()">Disconnect Wallet</button>
           </div>
@@ -82,7 +82,7 @@
         </div>
 
       </div>
-    </nav>
+    </nav> 
   </header>
   <!-- OLD HEADER -->
   <!-- <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
@@ -106,20 +106,47 @@
           </div>
         </div>
       </div> -->
-    <div v-if="!web3Modal.active" class="is-flex is-justify-content-space-between container is-fullhd mb-2">
+    <div v-if="!web3Modal.active" class="column is-8-desktop is-12-mobile pl-0"
+      v-bind:class="!!selectedProposal ? 'is-offset-2-desktop' : '' ">
       <strong class="error-message">Please connect to wallet for voting</strong>
     </div>
-    <div class="is-flex is-justify-content-space-between container is-fullhd mb-2">
-      <div><button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button></div>
-      <div>
-        <div class="buttons">
-          <a class="button is-primary" v-on:click="isShowModal = true">
-            <strong>Instructions</strong>
-          </a>
+    
+    <div class="content is-12-desktop is-12-mobile pl-0">
+      <div class="is-flex">
+        <div
+          v-if="!selectedProposal" 
+          class="column is-8-desktop is-6-mobile pl-0 is-flex is-align-items-center">
+          <h3 class="mb-0">Welcome to the SingularityNET voting portal!</h3>
+        </div>
+        <div v-else class="column is-4-desktop is-6-mobile is-offset-2-desktop pl-0">
+          <button v-if="selectedProposal" class="button" v-on:click="closeSelectedProposal()">back</button>
+        </div>
+
+        <div class="column is-6-mobile is-4-desktop is-flex is-justify-content-end pr-0">
+          <div class="buttons">
+            <a class="button is-primary" v-on:click="isShowModal = true">
+              <strong>Instructions</strong>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
+      <div v-if="!selectedProposal" class="column is-three-fifths" >
+        Thank you for taking the time to participate in the governance of Deep Funding and indirectly, the future of SingularityNET. 
+        <br /><br />Below you see a list of all eligible proposals in Deep Funding - Round 1.
+        Click a proposal title to view a summary and a link to 
+        <a href="https://proposals.deepfunding.ai/" target="_blank" rel="noreferrer noopener">
+          our portal
+        </a> where you will find all proposal details and community feedback.
+        Please submit your vote for each of the proposals you have reviewed.
+        <br /><br />You can start voting If you have a wallet connected that contains at least 1 AGIX.
+        Each proposal can be graded from 1-10 where 1 is the lowest score and 10 is the highest. Note that each proposal needs at least an average score of 6,5 to be eligible for funding. You cannot change your vote after you have submitted, so vote wisely and deliberately, with respect of the work that the proposers put into it.
+        <br /><br />For more details on the Deep Funding program and the rules, please visit 
+        <a href="http://deepfunding.ai/" target="_blank" rel="noreferrer noopener">
+          deepfunding.ai
+        </a>
+      </div>
+    </div>
     <!-- IF Loading Proposals -->
     <div v-if="loading.proposals" class="content">
       <h3>Loading proposals</h3>
@@ -132,7 +159,7 @@
         <div>
             <div
               v-if="message"
-              class="notification"
+              class="notification column is-8-desktop is-offset-2-desktop"
               v-bind:class="messageType === 'success' ? 'is-success' : 'is-danger'"
             >
             {{ message }}
@@ -148,9 +175,9 @@
                 <h3>Proposal</h3>
 
                 <div class="dropdown-container">
-                  <h3>{{selectedProposal.question}}</h3>
+                  <div v-html="selectedProposal.question"></div>
                   <div class="box">
-                    <p>{{selectedProposal.description}}</p>
+                    <div v-html="selectedProposal.description"></div>
                     <a :href="selectedProposal.details_url" target="_blank">Click here to know more</a>
                   </div>
 
@@ -182,7 +209,7 @@
                               <strong>{{option.value}}</strong>
                             </div>
                           </div>
-                          <div v-if="selectedOption == option.key || option.key == selectedProposal.user_response_key" class="media-right">
+                          <div v-if="option.key == selectedProposal.user_response_key" class="media-right">
                             <button class="button is-medium" v-on:click="selectedProposal.user_response_key ? '' :selectedOption = option.key"
                               style="background-color: #E7FFF8; border: 0cm;">
                               <span class="material-icons"> task_alt </span>
@@ -200,7 +227,7 @@
                     </li>
                   </ol>
                 </div>
-                <h3>Your Vote</h3>
+                <h3>Your Vote</h3>             
                 <div class="box">
                     <button
                       class="button"
@@ -208,7 +235,8 @@
                       v-on:click="submitVote()"
                     >
                     <span class="icon"> ✍️ </span>
-                    <span>SIGN & CONFIRM</span>
+                    <span v-if="!!selectedProposal.user_response_key">You have already voted!</span>
+                    <span v-else>SIGN & CONFIRM</span>
                   </button>
                 </div>
               </div>
@@ -241,7 +269,7 @@
                 >
                 <div class="card-content is-flex is-justify-content-space-between is-align-items-center" v-bind:style="[activeProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                   <div>
-                    <p>{{activeProposal.question}}</p>
+                    <div v-html="activeProposal.question"></div>
                     <!-- <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a> -->
                   </div>  
                   <div v-if="activeProposal.user_response_key" class="media-right is-flex is-justify-content-space-between is-align-items-center">
@@ -257,7 +285,7 @@
             <ul>
               <li v-for="inactiveProposal in proposals.inactive" :key="inactiveProposal.question_id" class="card">
                 <div class="card-content">
-                  <p>{{inactiveProposal.question}}</p>
+                  <div v-html="inactiveProposal.question"></div>
                   <!-- <a :href="inactiveProposal.details_url" target="_blank" rel="noreferrer noopener"></a>
                   {{inactiveProposal.details_url}}
                   </a> -->
@@ -382,9 +410,16 @@
         </header>
         <section class="modal-card-body">
           <div class="content">
-            <p>
-              You will see a list of voting proposals. Choose any of them to cast your vote.
-            </p>
+            <p>Instructions for voting:</p>
+            <ul>
+              <li>Connect your wallet containing AGIX tokens</li>
+              <li>Select a proposal</li>
+              <li>Select your vote for the proposal</li>
+              <li>Click Sign and Confirm</li>
+              <li>Confirm the “Sign” transaction on your wallet (no gas fee)</li>
+              <li>Repeat for all proposals you want to vote on</li>
+              <li>That’s it, you’re done. Enjoy a warm fuzzy feeling inside for participating in Deep Funding governance</li>
+            </ul>
           </div>
         </section>
         <!-- <section class="modal-card-body">
