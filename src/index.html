@@ -72,7 +72,7 @@
                 Blog
               </a>
             </div>
-          </div>          
+          </div>
           <div  v-if="web3Modal.active" class="navbar-item">
             <button class="header-disconnect-button" v-on:click="disconnect()">Disconnect Wallet</button>
           </div>
@@ -82,7 +82,7 @@
         </div>
 
       </div>
-    </nav> 
+    </nav>
   </header>
   <!-- OLD HEADER -->
   <!-- <nav class="navbar is-primary is-large" role="navigation" aria-label="main navigation" style="padding-left: 1rem">
@@ -110,11 +110,11 @@
       v-bind:class="!!selectedProposal ? 'is-offset-2-desktop' : '' ">
       <strong class="error-message">Please connect to wallet for voting</strong>
     </div>
-    
+
     <div class="content is-12-desktop is-12-mobile pl-0">
       <div class="is-flex">
         <div
-          v-if="!selectedProposal" 
+          v-if="!selectedProposal"
           class="column is-8-desktop is-6-mobile pl-0 is-flex is-align-items-center">
           <h3 class="mb-0">Welcome to the SingularityNET voting portal!</h3>
         </div>
@@ -132,19 +132,21 @@
       </div>
 
       <div v-if="!selectedProposal" class="column is-three-fifths" >
-        Thank you for taking the time to participate in the governance of Deep Funding and indirectly, the future of SingularityNET. 
+        Thank you for taking the time to participate in the governance of Deep Funding and indirectly, the future of SingularityNET.
         <br /><br />Below you see a list of all eligible proposals in Deep Funding - Round 1.
-        Click a proposal title to view a summary and a link to 
+        Click a proposal title to view a summary and a link to
         <a href="https://proposals.deepfunding.ai/" target="_blank" rel="noreferrer noopener">
           our portal
         </a> where you will find all proposal details and community feedback.
         Please submit your vote for each of the proposals you have reviewed.
         <br /><br />You can start voting If you have a wallet connected that contains at least 1 AGIX.
         Each proposal can be graded from 1-10 where 1 is the lowest score and 10 is the highest. Note that each proposal needs at least an average score of 6,5 to be eligible for funding. You cannot change your vote after you have submitted, so vote wisely and deliberately, with respect of the work that the proposers put into it.
-        <br /><br />For more details on the Deep Funding program and the rules, please visit 
+        <br /><br />For more details on the Deep Funding program and the rules, please visit
         <a href="http://deepfunding.ai/" target="_blank" rel="noreferrer noopener">
           deepfunding.ai
         </a>
+        <br />
+        Happy Voting!
       </div>
     </div>
     <!-- IF Loading Proposals -->
@@ -195,7 +197,7 @@
                   <ol v-else-if="selectedProposal.question_type === 'SINGLE_SELECT'"
                     style="list-style-type: none; margin-left: 0px; margin-bottom: 25px">
                     <li v-for="option in selectedProposal.options">
-                      <div class="box-border pointer my-1" 
+                      <div class="box-border pointer my-1"
                         v-on:click="selectedProposal.user_response_key ? '' : selectedOption = option.key"
                         v-bind:style="[selectedOption == option.key || option.key == selectedProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                         <article class="media">
@@ -227,7 +229,7 @@
                     </li>
                   </ol>
                 </div>
-                <h3>Your Vote</h3>             
+                <h3>Your Vote</h3>
                 <div class="box">
                     <button
                       class="button"
@@ -271,7 +273,7 @@
                   <div>
                     <div v-html="activeProposal.question"></div>
                     <!-- <a :href="activeProposal.details_url">{{activeProposal.details_url}}</a> -->
-                  </div>  
+                  </div>
                   <div v-if="activeProposal.user_response_key" class="media-right is-flex is-justify-content-space-between is-align-items-center">
                       <span class="material-icons"> task_alt </span>
                       <span>VOTED</span>
@@ -425,7 +427,7 @@
         <!-- <section class="modal-card-body">
           <div class="content">
             <p>
-              The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal. 
+              The following instructions are meant to guide AGI token holders through the voting process on implementing SingularityNet phase two proposal.
             </p>
 
             <p>
@@ -556,7 +558,7 @@
           <a href="https://github.com/singnet" target="_blank" rel="noreferrer noopener"> <i class="fab fa-github"></i></a>
           <a href="https://twitter.com/singularity_net" target="_blank" rel="noreferrer noopener"> <i class="fab fa-twitter"></i></a>
           <a href="https://instagram.com/singularitynet.io" target="_blank" rel="noreferrer noopener"> <i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i class="fab fa-youtube"></i></i></a>          
+          <a href="https://www.youtube.com/channel/UCbTE8vfz5zuEK5uRnc2yjrw" target="_blank" rel="noreferrer noopener"><i class="fab fa-youtube"></i></i></a>
       </div>
     </div>
   </footer>
