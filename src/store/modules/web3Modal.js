@@ -10,6 +10,7 @@ const web3ModalStore = {
     active: false,
     account: null,
     chainId: 0,
+    provider: null,
   },
   mutations: {
     setWeb3Modal(state, web3Modal) {
@@ -27,10 +28,14 @@ const web3ModalStore = {
     setChainId(state, chainId) {
       state.chainId = chainId;
     },
+    setProvider(state, provider) {
+      state.provider = provider;
+    },
   },
   actions: {
     async connect({ state, commit, dispatch }) {
         const provider = await state.web3Modal.connect();
+      commit("setProvider", provider);
         
         const library = new ethers.providers.Web3Provider(provider);
 
@@ -69,14 +74,19 @@ const web3ModalStore = {
         console.log("chainChanged", chainId);
         window.location.reload();
       });
+      provider.on("disconnect", (code, reason) => {
+        console.log(code, reason);
+      });
     },
     async resetApp({ state, commit }) {
       try {
         await state.web3Modal.clearCachedProvider();
+        await state.provider.disconnect();
       } catch (error) {
         console.error(error);
       }
       commit("setAccount", null);
+      commit("setProvider", null);
       commit("setActive", false);
       commit("setLibrary", getLibrary());
     },

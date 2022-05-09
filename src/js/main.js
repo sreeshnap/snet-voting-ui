@@ -186,49 +186,21 @@ new Vue({
     Web3ModalVue
   },
   mixins: [web3Modal],
-  data: {
-    event: {
-      eventName: "",
-      startPeriod: 0,
-      endPeriod: 0,
-      questions: [],
-    },
-    selectedCandidates: false,
-    alreadyVoted: false,
-    receipt: undefined,
-    tier: 0,
-    votes: [],
-    from: undefined,
-    signed: undefined,
-    message: null,
-    messageType: undefined,
-    isShowModal: false,
-    isMetamaskConnected: false,
-    countdownTime: "00 Hr 00 Mn 00 s",
-    proposals: undefined,
-    selectedProposal: undefined,
-    selectedOption: undefined,
-    loading: { proposals: false, submitVote: false },
-    theme: 'light',
-    providerOptions: {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: process.env.INFURA_KEY,
-        },
-      },
-      },
-    number: 0,
-    balance: 0
+  data: function () {
+    return initialState();
   },
   methods: {
     async connect() {
       await this.$store.dispatch("connect");
-      if (this.web3Modal.account) getProposals(this, this.web3Modal.account);
+      if (this.web3Modal.account) {
+        Object.assign(this.$data, initialState());
+        getProposals(this, this.web3Modal.account);
+      }
     },
 
     async disconnect() {
       await this.$store.dispatch("resetApp");
+      Object.assign(this.$data, initialState());
       getProposals(this);
     },
     submitVote,
@@ -271,5 +243,43 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-
+  
 });
+
+function initialState() {
+  return {
+    event: {
+      eventName: "",
+      startPeriod: 0,
+      endPeriod: 0,
+      questions: [],
+    },
+    selectedCandidates: false,
+    alreadyVoted: false,
+    receipt: undefined,
+    tier: 0,
+    votes: [],
+    from: undefined,
+    signed: undefined,
+    message: null,
+    messageType: undefined,
+    isShowModal: false,
+    isMetamaskConnected: false,
+    countdownTime: "00 Hr 00 Mn 00 s",
+    proposals: undefined,
+    selectedProposal: undefined,
+    selectedOption: undefined,
+    loading: { proposals: false, submitVote: false },
+    theme: 'light',
+    providerOptions: {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: process.env.INFURA_KEY,
+        },
+      },
+      },
+    number: 0,
+    balance: 0
+  };
+}
