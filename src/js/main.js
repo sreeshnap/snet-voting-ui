@@ -177,6 +177,12 @@ function isVotingTime() {
   return ret;
 }
 
+function isCorrectNetwork() {
+  if (this.web3Modal && this.web3Modal.chainId == process.env.CHAIN_ID) 
+    return true;
+  return false;
+}
+
 Vue.use(VueResource);
 
 new Vue({
@@ -203,6 +209,7 @@ new Vue({
       Object.assign(this.$data, initialState());
       getProposals(this);
     },
+    isCorrectNetwork,
     submitVote,
     closeSelectedProposal() {
       closeSelectedProposal(this);
@@ -265,6 +272,7 @@ function initialState() {
     messageType: undefined,
     isShowModal: false,
     isMetamaskConnected: false,
+    allowedNetwork: networks[process.env.CHAIN_ID],
     countdownTime: "00 Hr 00 Mn 00 s",
     proposals: undefined,
     selectedProposal: undefined,
