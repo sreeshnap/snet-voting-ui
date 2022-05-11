@@ -111,6 +111,11 @@
       <strong class="error-message">Please connect to wallet for voting</strong>
     </div>
 
+    <div v-if="web3Modal.active && !isCorrectNetwork()" class="column is-8-desktop is-12-mobile pl-0"
+      v-bind:class="!!selectedProposal ? 'is-offset-2-desktop' : '' ">
+      <strong class="error-message">Please switch to {{allowedNetwork}} network.</strong>
+    </div>
+
     <div class="content is-12-desktop is-12-mobile pl-0">
       <div class="is-flex">
         <div
@@ -233,7 +238,7 @@
                 <div class="box">
                     <button
                       class="button"
-                      :disabled="signed || !selectedOption || !web3Modal.active || !!selectedProposal.user_response_key"
+                      :disabled="signed || !selectedOption || !web3Modal.active || !!selectedProposal.user_response_key || !isCorrectNetwork()"
                       v-on:click="submitVote()"
                     >
                     <span class="icon"> ✍️ </span>
