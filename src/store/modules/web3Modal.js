@@ -1,6 +1,7 @@
 import { getLibrary } from "../../utils/web3";
 import { ethers } from "ethers";
 import { parseInt } from "lodash";
+import web3 from 'web3'
 
 const web3ModalStore = {
   state: {
@@ -10,6 +11,7 @@ const web3ModalStore = {
     active: false,
     account: null,
     chainId: 0,
+    provider: null,
   },
   mutations: {
     setWeb3Modal(state, web3Modal) {
@@ -27,12 +29,16 @@ const web3ModalStore = {
     setChainId(state, chainId) {
       state.chainId = chainId;
     },
+    setProvider(state, provider) {
+      state.provider = provider;
+    },
   },
   actions: {
     async connect({ state, commit, dispatch }) {
-        const provider = await state.web3Modal.connect();
+      const provider = await state.web3Modal.connect();
+      commit("setProvider", provider);
         
-        const library = new ethers.providers.Web3Provider(provider);
+      const library = new ethers.providers.Web3Provider(provider);
 
       library.pollingInterval = 12000;
       commit("setLibrary", library);
@@ -43,6 +49,20 @@ const web3ModalStore = {
         commit("setAccount", accounts[0]);
       }
       const network = await library.getNetwork();
+
+      try{
+        const isExpectedNetwork = Number(network.chainId) === Number(process.env.CHAIN_ID);
+        if (!isExpectedNetwork) {
+          const hexifiedChainId = web3.utils.toHex(process.env.CHAIN_ID);
+          await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: hexifiedChainId }]
+          });
+        }
+      }catch(err){
+        console.error("error of network change",err)
+      }
+      
       commit("setChainId", network.chainId);
       commit("setActive", true);
 
@@ -69,14 +89,19 @@ const web3ModalStore = {
         console.log("chainChanged", chainId);
         window.location.reload();
       });
+      provider.on("disconnect", (code, reason) => {
+        console.log(code, reason);
+      });
     },
     async resetApp({ state, commit }) {
       try {
         await state.web3Modal.clearCachedProvider();
+        await state.provider.disconnect();
       } catch (error) {
         console.error(error);
       }
       commit("setAccount", null);
+      commit("setProvider", null);
       commit("setActive", false);
       commit("setLibrary", getLibrary());
     },
