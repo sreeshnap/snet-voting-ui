@@ -7,7 +7,10 @@ import axios from "axios";
 export const getProposals = async (appState, address = "") => {
   try {
     appState.loading.proposals = true;
-    const { data } = await axios.post(process.env.BASE_API_URI + "/proposals/", { address });
+    const { data } = await axios.post(
+      process.env.BASE_API_URI + "/proposals/",
+      { address, event_id: process.env.EVENT_ID }
+    );
     const {
       status,
       data: { questions },
@@ -47,11 +50,15 @@ export const getMessageToSign = (selectedProposal, selectedOption) => {
 };
 
 export const saveProposal = async (address, message, signature) => {
-  const { data } = await axios.post(process.env.BASE_API_URI + "/proposal/save", {
-    message,
-    address,
-    signature,
-  });
+  const { data } = await axios.post(
+    process.env.BASE_API_URI + "/proposal/save",
+    {
+      event_id: process.env.EVENT_ID,
+      message,
+      address,
+      signature,
+    }
+  );
   return data;
 };
 
@@ -59,4 +66,5 @@ export const closeSelectedProposal = (appState) => {
   appState.selectedProposal = undefined;
   appState.selectedOption = undefined;
   appState.message = undefined;
+  appState.signed = undefined;
 };
