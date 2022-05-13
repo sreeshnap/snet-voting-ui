@@ -278,7 +278,7 @@
                   v-for="activeProposal in proposals.active"
                   :key="activeProposal.question_id"
                   class="card"
-                  v-on:click="activeProposal.user_response_key ? selectionOptionChange(activeProposal) :selectedProposal = activeProposal"
+                  v-on:click="activeProposal.user_response_key ? selectionOptionChange(activeProposal) : goToProposalPage(activeProposal)"
                 >
                 <div class="card-content is-flex is-justify-content-space-between is-align-items-center" v-bind:style="[activeProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                   <div>

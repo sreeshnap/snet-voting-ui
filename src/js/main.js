@@ -141,6 +141,11 @@ function selectionOptionChange(activeProposal) {
       }
       else document.getElementById("dropdown").disabled = false;
   }, 500);
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
+}
+function goToProposalPage(activeProposal) {
+  this.selectedProposal = activeProposal;
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
 }
 
 async function mounted() {
@@ -215,6 +220,7 @@ new Vue({
       closeSelectedProposal(this);
     },
     selectionOptionChange,
+    goToProposalPage,
     // onAddOption,
   },
   computed: { isVotingTime },
