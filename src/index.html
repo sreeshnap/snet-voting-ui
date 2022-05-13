@@ -108,7 +108,7 @@
       </div> -->
     <div v-if="!web3Modal.active" class="column is-8-desktop is-12-mobile pl-0"
       v-bind:class="!!selectedProposal ? 'is-offset-2-desktop' : '' ">
-      <strong class="error-message">Please connect to wallet for voting</strong>
+      <strong class="error-message">Please connect your wallet to vote</strong>
     </div>
 
     <div v-if="web3Modal.active && !isCorrectNetwork()" class="column is-8-desktop is-12-mobile pl-0"
@@ -154,6 +154,16 @@
         Happy Voting!
       </div>
     </div>
+
+    <div class="columns">
+      <div v-if="this.web3Modal && this.web3Modal.account" class="column is-8-desktop is-12-mobile"
+      v-bind:class="!!selectedProposal ? 'is-offset-2-desktop' : '' ">
+        <div class="content">
+          <h3>Your Account</h3>
+          <p>{{ this.web3Modal.account }}</p>
+        </div>
+      </div>
+    </div>
     <!-- IF Loading Proposals -->
     <div v-if="loading.proposals" class="content">
       <h3>Loading proposals</h3>
@@ -174,10 +184,6 @@
 
           <div class="columns">
             <div class="column is-8-desktop is-offset-2-desktop">
-              <div class="content" v-if="from">
-                <h3>Your Account</h3>
-                <p>{{ from }}</p>
-              </div>
               <div class="content" v-if="alreadyVoted === false">
                 <h3>Proposal</h3>
 
