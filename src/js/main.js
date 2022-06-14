@@ -5,6 +5,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import {web3Modal} from "../config/mixins";
 import store from '../store'
 import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
+import axios from "axios";
 
 
 const networks = {
@@ -148,6 +149,23 @@ function goToProposalPage(activeProposal) {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 }
 
+async function getEvent(state) {
+  try {
+    const { data } = await axios.get(`${BASE_API_URI}/event?event_id=${EVENT_ID}`);
+    const {
+      status,
+      data: { event_open_text, event_close_text, start_period, end_period },
+    } = data;
+    if (status === "success") {
+      const now = parseInt(new Date().getTime() / 1000);
+      const isEventRunning = now > start_period && now < end_period;
+      state.eventText = isEventRunning ? event_open_text : event_close_text;
+    }
+  } catch (error) {
+    //   handle error case;
+  } 
+}
+
 async function mounted() {
   this.$nextTick(async () => {
     const web3modal = this.$refs.web3modal;
@@ -156,6 +174,7 @@ async function mounted() {
       this.connect()
     }
   })
+  getEvent(this);
   getProposals(this);
   startCountdownTimer(this);
 
@@ -267,6 +286,7 @@ function initialState() {
       endPeriod: 0,
       questions: [],
     },
+    eventText: null,
     selectedCandidates: false,
     alreadyVoted: false,
     receipt: undefined,
