@@ -6,6 +6,7 @@ import {web3Modal} from "../config/mixins";
 import store from '../store'
 import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
 import axios from "axios";
+import moment from "moment";
 
 
 const networks = {
@@ -157,7 +158,7 @@ async function getEvent(state) {
       data: { event_open_text, event_close_text, start_period, end_period },
     } = data;
     if (status === "success") {
-      const now = parseInt(new Date().getTime() / 1000);
+      const now = moment.utc().format("X");
       const isEventRunning = now > start_period && now < end_period;
       state.eventText = isEventRunning ? event_open_text : event_close_text;
     }
