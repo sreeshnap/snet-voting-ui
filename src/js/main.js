@@ -5,6 +5,8 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import {web3Modal} from "../config/mixins";
 import store from '../store'
 import { closeSelectedProposal, getMessageToSign, getProposals, saveProposal } from "./proposals";
+import axios from "axios";
+import moment from "moment";
 
 
 const networks = {
@@ -141,6 +143,28 @@ function selectionOptionChange(activeProposal) {
       }
       else document.getElementById("dropdown").disabled = false;
   }, 500);
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
+}
+function goToProposalPage(activeProposal) {
+  this.selectedProposal = activeProposal;
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
+}
+
+async function getEvent(state) {
+  try {
+    const { data } = await axios.get(`${BASE_API_URI}/event?event_id=${EVENT_ID}`);
+    const {
+      status,
+      data: { event_open_text, event_close_text, start_period, end_period },
+    } = data;
+    if (status === "success") {
+      const now = moment.utc().format("X");
+      const isEventRunning = now > start_period && now < end_period;
+      state.eventText = isEventRunning ? event_open_text : event_close_text;
+    }
+  } catch (error) {
+    //   handle error case;
+  } 
 }
 
 async function mounted() {
@@ -151,6 +175,7 @@ async function mounted() {
       this.connect()
     }
   })
+  getEvent(this);
   getProposals(this);
   startCountdownTimer(this);
 
@@ -215,6 +240,7 @@ new Vue({
       closeSelectedProposal(this);
     },
     selectionOptionChange,
+    goToProposalPage,
     // onAddOption,
   },
   computed: { isVotingTime },
@@ -261,6 +287,7 @@ function initialState() {
       endPeriod: 0,
       questions: [],
     },
+    eventText: null,
     selectedCandidates: false,
     alreadyVoted: false,
     receipt: undefined,

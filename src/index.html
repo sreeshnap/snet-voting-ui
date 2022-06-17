@@ -136,27 +136,8 @@
         </div>
       </div>
 
-      <div v-if="!selectedProposal" class="column is-three-fifths" >
-        Thank you for taking the time to participate in the governance of Deep Funding and indirectly, the future of SingularityNET.
-        <br /><br />Below you see a list of all eligible proposals in Deep Funding - Round 1.
-        Click a proposal title to view a summary and a link to
-        <a href="https://proposals.deepfunding.ai/" target="_blank" rel="noreferrer noopener">
-          our portal
-        </a> where you will find all proposal details and community feedback.
-        Please submit your vote for each of the proposals you have reviewed.
-        <br /><br />
-        <b> NB: You can vote on as many proposals as you like.
-          Each vote will represent the full voting power of your tokens. </b>This includes your regular wallet, staked tokens and tokens in liquidity pools.
-
-        <br /><br />You can start voting If you have a wallet connected that contains at least 1 AGIX.
-        Each proposal can be graded from 1-10 where 1 is the lowest score and 10 is the highest. Note that each proposal needs at least an average score of 6.5 to be eligible for funding. You cannot change your vote after you have submitted, so vote wisely and deliberately, with respect of the work that the proposers put into it.
-        Users are required to maintain their AGIX balance during the full voting period in order to be considered.
-        <br /><br />For more details on the Deep Funding program and the rules, please visit
-        <a href="http://deepfunding.ai/" target="_blank" rel="noreferrer noopener">
-          deepfunding.ai
-        </a>
-        <br />
-        Happy Voting!
+      <div v-if="!selectedProposal && eventText" class="column is-three-fifths" >
+        <div v-html="eventText"></div>
       </div>
     </div>
 
@@ -283,7 +264,7 @@
                   v-for="activeProposal in proposals.active"
                   :key="activeProposal.question_id"
                   class="card"
-                  v-on:click="activeProposal.user_response_key ? selectionOptionChange(activeProposal) :selectedProposal = activeProposal"
+                  v-on:click="activeProposal.user_response_key ? selectionOptionChange(activeProposal) : goToProposalPage(activeProposal)"
                 >
                 <div class="card-content is-flex is-justify-content-space-between is-align-items-center" v-bind:style="[activeProposal.user_response_key ? {'background':'#E7FFF8'} : {}]">
                   <div>
