@@ -12,6 +12,7 @@ import moment from "moment";
 const networks = {
   1: "Mainnet",
   3: "Ropsten",
+  5: "Goerli"
 };
 
 const BASE_API_URI = process.env.BASE_API_URI;
